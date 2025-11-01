@@ -70,49 +70,82 @@ const GanttView = ({ refresh }) => {
     };
   };
 
-  // Get phase segments
+  // Get phase segments with darkness overlay
   const getPhaseSegments = (production) => {
     const methodData = production.methodData;
     const soakDays = Math.ceil(methodData.soakDuration / 24);
-    // L'obscurité se passe pendant la germination, pas en plus
     const germinationDays = methodData.germinationDuration;
-    const totalDays = soakDays + germinationDays + methodData.growthDuration;
+    const darkDays = methodData.darkDuration;
+    const growthDays = methodData.growthDuration;
+    const totalDays = soakDays + germinationDays + growthDays;
     
-    const segments = [
-      {
-        name: 'Trempage',
-        color: 'bg-blue-400',
-        width: (soakDays / totalDays) * 100,
-        days: soakDays
-      }
-    ];
+    const segments = [];
     
-    // Germination avec indication de l'obscurité
-    if (methodData.darkDuration > 0) {
+    // Trempage
+    segments.push({
+      name: 'Trempage',
+      color: 'bg-blue-400',
+      width: (soakDays / totalDays) * 100,
+      days: soakDays,
+      darkOverlay: false
+    });
+    
+    // Germination (avec ou sans obscurité)
+    if (darkDays > 0 && darkDays <= germinationDays) {
+      // Obscurité pendant germination
       segments.push({
         name: 'Germination',
         color: 'bg-green-400',
         width: (germinationDays / totalDays) * 100,
         days: germinationDays,
-        subtext: `(dont ${methodData.darkDuration}j noir)`
+        darkOverlay: true,
+        darkDays: darkDays,
+        darkPercentage: (darkDays / germinationDays) * 100
       });
-    } else {
+    } else if (darkDays > germinationDays) {
+      // Obscurité déborde sur la croissance
       segments.push({
         name: 'Germination',
         color: 'bg-green-400',
         width: (germinationDays / totalDays) * 100,
-        days: germinationDays
+        days: germinationDays,
+        darkOverlay: true,
+        darkDays: germinationDays,
+        darkPercentage: 100
+      });
+    } else {
+      // Pas d'obscurité
+      segments.push({
+        name: 'Germination',
+        color: 'bg-green-400',
+        width: (germinationDays / totalDays) * 100,
+        days: germinationDays,
+        darkOverlay: false
       });
     }
     
-    // Croissance
-    if (methodData.growthDuration > 0) {
-      segments.push({
-        name: 'Croissance',
-        color: 'bg-yellow-400',
-        width: (methodData.growthDuration / totalDays) * 100,
-        days: methodData.growthDuration
-      });
+    // Croissance (avec obscurité si elle déborde)
+    if (growthDays > 0) {
+      const darkInGrowth = Math.max(0, darkDays - germinationDays);
+      if (darkInGrowth > 0) {
+        segments.push({
+          name: 'Croissance',
+          color: 'bg-yellow-400',
+          width: (growthDays / totalDays) * 100,
+          days: growthDays,
+          darkOverlay: true,
+          darkDays: darkInGrowth,
+          darkPercentage: (darkInGrowth / growthDays) * 100
+        });
+      } else {
+        segments.push({
+          name: 'Croissance',
+          color: 'bg-yellow-400',
+          width: (growthDays / totalDays) * 100,
+          days: growthDays,
+          darkOverlay: false
+        });
+      }
     }
     
     return segments;
