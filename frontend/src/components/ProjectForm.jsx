@@ -13,7 +13,7 @@ import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { CalendarIcon, Plus, Trash2, Camera, Save, Video, Image as ImageIcon, FlaskConical } from 'lucide-react';
 import { toast } from '../hooks/use-toast';
-import { getProductSheets, growthStages, saveProject } from '../mock';
+import { getProductSheets, getStagesByMethodType, saveProject, calculateDaysToStage } from '../mock';
 
 const ProjectForm = ({ onProjectCreated }) => {
   const [productSheets, setProductSheets] = useState([]);
