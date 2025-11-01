@@ -74,34 +74,58 @@ const GanttView = ({ refresh }) => {
   const getPhaseSegments = (production) => {
     const methodData = production.methodData;
     const soakDays = Math.ceil(methodData.soakDuration / 24);
-    const totalDays = soakDays + methodData.germinationDuration + methodData.darkDuration + methodData.growthDuration;
+    // Germination et obscurité sont juxtaposées (en même temps), donc on prend le max
+    const germinationDays = Math.max(methodData.germinationDuration, methodData.darkDuration);
+    const totalDays = soakDays + germinationDays + methodData.growthDuration;
     
-    return [
+    const segments = [
       {
         name: 'Trempage',
         color: 'bg-blue-400',
         width: (soakDays / totalDays) * 100,
         days: soakDays
-      },
-      {
+      }
+    ];
+    
+    // Germination avec obscurité (juxtaposée)
+    if (methodData.darkDuration > 0 && methodData.darkDuration === germinationDays) {
+      // Obscurité couvre toute la germination
+      segments.push({
+        name: 'Germ + Noir',
+        color: 'bg-gradient-to-r from-green-400 to-gray-600',
+        width: (germinationDays / totalDays) * 100,
+        days: germinationDays
+      });
+    } else if (methodData.darkDuration > 0) {
+      // Obscurité partielle pendant germination
+      segments.push({
         name: 'Germination',
         color: 'bg-green-400',
-        width: (methodData.germinationDuration / totalDays) * 100,
-        days: methodData.germinationDuration
-      },
-      {
-        name: 'Obscurité',
-        color: 'bg-gray-600',
-        width: (methodData.darkDuration / totalDays) * 100,
-        days: methodData.darkDuration
-      },
-      {
+        width: (germinationDays / totalDays) * 100,
+        days: germinationDays,
+        subtext: `(dont ${methodData.darkDuration}j noir)`
+      });
+    } else {
+      // Pas d'obscurité
+      segments.push({
+        name: 'Germination',
+        color: 'bg-green-400',
+        width: (germinationDays / totalDays) * 100,
+        days: germinationDays
+      });
+    }
+    
+    // Croissance
+    if (methodData.growthDuration > 0) {
+      segments.push({
         name: 'Croissance',
         color: 'bg-yellow-400',
         width: (methodData.growthDuration / totalDays) * 100,
         days: methodData.growthDuration
-      }
-    ].filter(phase => phase.days > 0);
+      });
+    }
+    
+    return segments;
   };
 
   // Calculate progress cursor
