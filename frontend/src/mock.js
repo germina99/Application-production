@@ -44,53 +44,10 @@ export const getStagesByMethodType = (method) => {
   ];
 };
 
-// Default tasks by method type with moment, frequency and duration
-export const getDefaultTasksByMethod = (method) => {
-  const methodLower = method.toLowerCase();
-  
-  if (methodLower.includes('germination en pot')) {
-    return [
-      { name: 'Rinçage 2x/jour', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
-      { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' }
-    ];
-  }
-  
-  if (methodLower.includes('germination sur plateau')) {
-    return [
-      { name: 'Brumisation', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
-      { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' },
-      { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '5 min' }
-    ];
-  }
-  
-  if (methodLower.includes('micro-pousse sur terreau')) {
-    return [
-      { name: 'Arrosage quotidien', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
-      { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '10 min' },
-      { name: 'Vérifier moisissure', moment: 'Soir', frequency: '1x/jour', duration: '10 min' }
-    ];
-  }
-  
-  if (methodLower.includes('micro-pousse hydroponique')) {
-    return [
-      { name: 'Vérifier pH eau', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
-      { name: 'Nettoyer système', moment: 'Matin', frequency: '1x/semaine', duration: '30 min' },
-      { name: 'Contrôler température', moment: 'Matin et soir', frequency: '2x/jour', duration: '5 min' }
-    ];
-  }
-  
-  if (methodLower.includes('micro-pousse sur tapis de chanvre')) {
-    return [
-      { name: 'Arrosage par vaporisation', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
-      { name: 'Maintenir humidité tapis', moment: 'Midi', frequency: '1x/jour', duration: '5 min' }
-    ];
-  }
-  
-  return [
-    { name: 'Arrosage', moment: 'Matin', frequency: '1x/jour', duration: '10 min' },
-    { name: 'Surveillance', moment: 'Matin', frequency: '1x/jour', duration: '5 min' }
-  ];
-};
+import { getDefaultTasksByMethod as getDefaultTasksFromConfig } from './config/defaultTasks';
+
+// Export the function from config
+export const getDefaultTasksByMethod = getDefaultTasksFromConfig;
 
 // Product sheets - templates for seed varieties
 export const mockProductSheets = [
