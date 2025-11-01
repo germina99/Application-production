@@ -74,8 +74,8 @@ const GanttView = ({ refresh }) => {
   const getPhaseSegments = (production) => {
     const methodData = production.methodData;
     const soakDays = Math.ceil(methodData.soakDuration / 24);
-    // Germination et obscurité sont juxtaposées (en même temps), donc on prend le max
-    const germinationDays = Math.max(methodData.germinationDuration, methodData.darkDuration);
+    // L'obscurité se passe pendant la germination, pas en plus
+    const germinationDays = methodData.germinationDuration;
     const totalDays = soakDays + germinationDays + methodData.growthDuration;
     
     const segments = [
@@ -87,17 +87,8 @@ const GanttView = ({ refresh }) => {
       }
     ];
     
-    // Germination avec obscurité (juxtaposée)
-    if (methodData.darkDuration > 0 && methodData.darkDuration === germinationDays) {
-      // Obscurité couvre toute la germination
-      segments.push({
-        name: 'Germ + Noir',
-        color: 'bg-gradient-to-r from-green-400 to-gray-600',
-        width: (germinationDays / totalDays) * 100,
-        days: germinationDays
-      });
-    } else if (methodData.darkDuration > 0) {
-      // Obscurité partielle pendant germination
+    // Germination avec indication de l'obscurité
+    if (methodData.darkDuration > 0) {
       segments.push({
         name: 'Germination',
         color: 'bg-green-400',
@@ -106,7 +97,6 @@ const GanttView = ({ refresh }) => {
         subtext: `(dont ${methodData.darkDuration}j noir)`
       });
     } else {
-      // Pas d'obscurité
       segments.push({
         name: 'Germination',
         color: 'bg-green-400',
