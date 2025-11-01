@@ -8,17 +8,19 @@ import { Calendar } from './ui/calendar';
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
 import { Badge } from './ui/badge';
 import { Textarea } from './ui/textarea';
+import { Checkbox } from './ui/checkbox';
 import { format } from 'date-fns';
 import { fr } from 'date-fns/locale';
-import { CalendarIcon, Plus, Trash2, Camera, Save } from 'lucide-react';
+import { CalendarIcon, Plus, Trash2, Camera, Save, Video, Image as ImageIcon, FlaskConical } from 'lucide-react';
 import { toast } from '../hooks/use-toast';
-import { getProductSheets, growthStages, saveProject, calculateEndDate } from '../mock';
+import { getProductSheets, growthStages, saveProject } from '../mock';
 
 const ProjectForm = ({ onProjectCreated }) => {
   const [productSheets, setProductSheets] = useState([]);
   const [projectName, setProjectName] = useState('');
+  const [projectDescription, setProjectDescription] = useState('');
   const [projectDate, setProjectDate] = useState(null);
-  const [targetStage, setTargetStage] = useState('');
+  const [projectType, setProjectType] = useState('photo'); // photo, tournage, test
   const [productions, setProductions] = useState([]);
 
   useEffect(() => {
@@ -38,10 +40,12 @@ const ProjectForm = ({ onProjectCreated }) => {
         productSheetId: '',
         variety: '',
         method: '',
+        targetStage: '',
         startDate: null,
         quantity: '',
         notes: '',
-        availableMethods: []
+        availableMethods: [],
+        availableStages: growthStages
       }
     ]);
   };
@@ -63,6 +67,24 @@ const ProjectForm = ({ onProjectCreated }) => {
           updated.variety = sheet.variety;
           updated.availableMethods = Object.keys(sheet.methods);
           updated.method = ''; // Reset method selection
+          updated.targetStage = ''; // Reset stage selection
+        }
+      }
+      
+      // Recalculate start date when method or stage changes
+      if ((field === 'method' || field === 'targetStage') && projectDate) {
+        const methodToUse = field === 'method' ? value : updated.method;
+        const stageToUse = field === 'targetStage' ? value : updated.targetStage;
+        
+        if (methodToUse && stageToUse && updated.productSheetId) {
+          const calculatedStart = calculateStartDate(
+            updated.productSheetId,
+            methodToUse,
+            stageToUse,
+            projectDate,
+            projectType
+          );
+          updated.startDate = calculatedStart;
         }
       }
       
@@ -70,22 +92,62 @@ const ProjectForm = ({ onProjectCreated }) => {
     }));
   };
 
-  const calculateSuggestedStartDate = (productSheetId, method) => {
-    if (!projectDate || !productSheetId || !method) return null;
+  // Recalculate all start dates when project date or type changes
+  useEffect(() => {
+    if (projectDate) {
+      setProductions(prev => prev.map(p => {
+        if (p.productSheetId && p.method && p.targetStage) {
+          const calculatedStart = calculateStartDate(
+            p.productSheetId,
+            p.method,
+            p.targetStage,
+            projectDate,
+            projectType
+          );
+          return { ...p, startDate: calculatedStart };
+        }
+        return p;
+      }));
+    }
+  }, [projectDate, projectType]);
+
+  const calculateStartDate = (productSheetId, method, targetStage, projectDateValue, projectTypeValue) => {
+    if (!projectDateValue || !productSheetId || !method || !targetStage) return null;
     
     const sheet = productSheets.find(s => s.id === productSheetId);
     if (!sheet || !sheet.methods[method]) return null;
     
     const methodData = sheet.methods[method];
-    const totalDays = 
-      Math.ceil(methodData.soakDuration / 24) +
-      methodData.germinationDuration +
-      methodData.darkDuration +
-      methodData.growthDuration;
+    let daysNeeded = Math.ceil(methodData.soakDuration / 24);
     
-    const suggested = new Date(projectDate);
-    suggested.setDate(suggested.getDate() - totalDays);
-    return suggested;
+    // Calculate days based on target stage
+    switch (targetStage) {
+      case 'Germination':
+        daysNeeded += methodData.germinationDuration;
+        break;
+      case 'Jeune pousse':
+        daysNeeded += methodData.germinationDuration + methodData.darkDuration;
+        break;
+      case 'Micro-pousse mature':
+        daysNeeded += methodData.germinationDuration + methodData.darkDuration + Math.floor(methodData.growthDuration * 0.7);
+        break;
+      case 'Prêt à récolter':
+        daysNeeded += methodData.germinationDuration + methodData.darkDuration + methodData.growthDuration;
+        break;
+      default:
+        daysNeeded += methodData.germinationDuration + methodData.darkDuration + methodData.growthDuration;
+    }
+    
+    const calculatedDate = new Date(projectDateValue);
+    
+    // For test, project date is start date
+    if (projectTypeValue === 'test') {
+      return calculatedDate;
+    }
+    
+    // For photo and tournage, project date is end date, so subtract days
+    calculatedDate.setDate(calculatedDate.getDate() - daysNeeded);
+    return calculatedDate;
   };
 
   const handleSubmit = (e) => {
@@ -102,7 +164,7 @@ const ProjectForm = ({ onProjectCreated }) => {
 
     // Validate all productions
     const invalidProduction = productions.find(
-      p => !p.productSheetId || !p.method || !p.startDate
+      p => !p.productSheetId || !p.method || !p.targetStage || !p.startDate
     );
     
     if (invalidProduction) {
@@ -116,12 +178,14 @@ const ProjectForm = ({ onProjectCreated }) => {
 
     const project = {
       projectName,
+      projectDescription,
       projectDate: format(projectDate, 'yyyy-MM-dd'),
-      targetStage,
+      projectType,
       productions: productions.map(p => ({
         productSheetId: p.productSheetId,
         variety: p.variety,
         method: p.method,
+        targetStage: p.targetStage,
         startDate: format(p.startDate, 'yyyy-MM-dd'),
         quantity: p.quantity,
         notes: p.notes
@@ -137,11 +201,25 @@ const ProjectForm = ({ onProjectCreated }) => {
 
     // Reset form
     setProjectName('');
+    setProjectDescription('');
     setProjectDate(null);
-    setTargetStage('');
+    setProjectType('photo');
     setProductions([]);
 
     if (onProjectCreated) onProjectCreated();
+  };
+
+  const getProjectTypeIcon = (type) => {
+    switch (type) {
+      case 'photo':
+        return <ImageIcon className="w-4 h-4" />;
+      case 'tournage':
+        return <Video className="w-4 h-4" />;
+      case 'test':
+        return <FlaskConical className="w-4 h-4" />;
+      default:
+        return <Camera className="w-4 h-4" />;
+    }
   };
 
   return (
@@ -158,8 +236,8 @@ const ProjectForm = ({ onProjectCreated }) => {
       <CardContent className="p-6">
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Project Info */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <div className="space-y-2 md:col-span-2">
+          <div className="space-y-4">
+            <div className="space-y-2">
               <Label>Nom du projet *</Label>
               <Input
                 placeholder="Ex: Contenu Instagram - Juillet"
@@ -170,38 +248,63 @@ const ProjectForm = ({ onProjectCreated }) => {
             </div>
 
             <div className="space-y-2">
-              <Label>Date du projet *</Label>
-              <Popover>
-                <PopoverTrigger asChild>
-                  <Button variant="outline" className="w-full justify-start text-left font-normal">
-                    <CalendarIcon className="mr-2 h-4 w-4" />
-                    {projectDate ? format(projectDate, 'PPP', { locale: fr }) : 'Choisir'}
-                  </Button>
-                </PopoverTrigger>
-                <PopoverContent className="w-auto p-0">
-                  <Calendar
-                    mode="single"
-                    selected={projectDate}
-                    onSelect={setProjectDate}
-                    locale={fr}
-                  />
-                </PopoverContent>
-              </Popover>
+              <Label>Description du projet</Label>
+              <Textarea
+                placeholder="Décrivez l'objectif et les détails du projet..."
+                value={projectDescription}
+                onChange={(e) => setProjectDescription(e.target.value)}
+                rows={3}
+              />
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label>Stade voulu pour le projet</Label>
-            <Select value={targetStage} onValueChange={setTargetStage}>
-              <SelectTrigger>
-                <SelectValue placeholder="Sélectionner un stade" />
-              </SelectTrigger>
-              <SelectContent>
-                {growthStages.map(stage => (
-                  <SelectItem key={stage} value={stage}>{stage}</SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-2">
+                <Label>Date du projet *</Label>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Button variant="outline" className="w-full justify-start text-left font-normal">
+                      <CalendarIcon className="mr-2 h-4 w-4" />
+                      {projectDate ? format(projectDate, 'PPP', { locale: fr }) : 'Choisir'}
+                    </Button>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0">
+                    <Calendar
+                      mode="single"
+                      selected={projectDate}
+                      onSelect={setProjectDate}
+                      locale={fr}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </div>
+
+              <div className="space-y-2">
+                <Label>Type de projet *</Label>
+                <div className="flex gap-3">
+                  {[
+                    { value: 'photo', label: 'Photo', icon: ImageIcon },
+                    { value: 'tournage', label: 'Tournage', icon: Video },
+                    { value: 'test', label: 'Test', icon: FlaskConical }
+                  ].map(type => (
+                    <Button
+                      key={type.value}
+                      type="button"
+                      variant={projectType === type.value ? 'default' : 'outline'}
+                      onClick={() => setProjectType(type.value)}
+                      className="flex-1"
+                    >
+                      <type.icon className="w-4 h-4 mr-2" />
+                      {type.label}
+                    </Button>
+                  ))}
+                </div>
+                <p className="text-xs text-gray-500">
+                  {projectType === 'test' 
+                    ? 'Date de début du test'
+                    : 'Date de fin (photo/tournage)'}
+                </p>
+              </div>
+            </div>
           </div>
 
           {/* Productions */}
@@ -229,8 +332,6 @@ const ProjectForm = ({ onProjectCreated }) => {
             )}
 
             {productions.map((prod, idx) => {
-              const suggestedStart = calculateSuggestedStartDate(prod.productSheetId, prod.method);
-              
               return (
                 <div key={prod.id} className="bg-gray-50 p-4 rounded-lg space-y-4 border">
                   <div className="flex items-center justify-between">
@@ -247,7 +348,7 @@ const ProjectForm = ({ onProjectCreated }) => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-sm">Fiche produit</Label>
+                      <Label className="text-sm">Fiche produit *</Label>
                       <Select
                         value={prod.productSheetId}
                         onValueChange={(val) => updateProduction(prod.id, 'productSheetId', val)}
@@ -269,7 +370,7 @@ const ProjectForm = ({ onProjectCreated }) => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label className="text-sm">Méthode</Label>
+                      <Label className="text-sm">Méthode *</Label>
                       <Select
                         value={prod.method}
                         onValueChange={(val) => updateProduction(prod.id, 'method', val)}
@@ -289,28 +390,21 @@ const ProjectForm = ({ onProjectCreated }) => {
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <div className="space-y-2">
-                      <Label className="text-sm">Date de début</Label>
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Button variant="outline" className="w-full justify-start text-left font-normal">
-                            <CalendarIcon className="mr-2 h-4 w-4" />
-                            {prod.startDate ? format(prod.startDate, 'PPP', { locale: fr }) : 'Choisir'}
-                          </Button>
-                        </PopoverTrigger>
-                        <PopoverContent className="w-auto p-0">
-                          <Calendar
-                            mode="single"
-                            selected={prod.startDate}
-                            onSelect={(date) => updateProduction(prod.id, 'startDate', date)}
-                            locale={fr}
-                          />
-                        </PopoverContent>
-                      </Popover>
-                      {suggestedStart && (
-                        <p className="text-xs text-blue-600">
-                          Suggéré: {format(suggestedStart, 'PPP', { locale: fr })}
-                        </p>
-                      )}
+                      <Label className="text-sm">Stade souhaité *</Label>
+                      <Select
+                        value={prod.targetStage}
+                        onValueChange={(val) => updateProduction(prod.id, 'targetStage', val)}
+                        disabled={!prod.method}
+                      >
+                        <SelectTrigger>
+                          <SelectValue placeholder="Sélectionner un stade" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {prod.availableStages.map(stage => (
+                            <SelectItem key={stage} value={stage}>{stage}</SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
                     </div>
 
                     <div className="space-y-2">
@@ -322,6 +416,15 @@ const ProjectForm = ({ onProjectCreated }) => {
                       />
                     </div>
                   </div>
+
+                  {prod.startDate && (
+                    <div className="bg-blue-50 p-3 rounded border border-blue-200">
+                      <Label className="text-sm text-blue-800">Date de début calculée</Label>
+                      <p className="text-sm font-medium text-blue-900 mt-1">
+                        {format(prod.startDate, 'PPP', { locale: fr })}
+                      </p>
+                    </div>
+                  )}
 
                   <div className="space-y-2">
                     <Label className="text-sm">Notes</Label>
