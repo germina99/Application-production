@@ -266,8 +266,9 @@ export const getAllProductions = () => {
       productions.push({
         ...prod,
         projectName: project.projectName,
+        projectDescription: project.projectDescription,
         projectDate: project.projectDate,
-        targetStage: project.targetStage,
+        projectType: project.projectType,
         projectId: project.id,
         endDate: endDate ? endDate.toISOString().split('T')[0] : null,
         methodData
