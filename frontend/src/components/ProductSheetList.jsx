@@ -144,8 +144,13 @@ const ProductSheetList = ({ refresh }) => {
                           </div>
                         </div>
                         {methodData.tasks.length > 0 && (
-                          <div className="mt-2 text-xs text-gray-600">
-                            <span className="text-gray-500">Tâches:</span> {methodData.tasks.join(', ')}
+                          <div className="mt-2 space-y-1">
+                            <span className="text-gray-500 text-xs">Tâches:</span>
+                            {methodData.tasks.map((task, tidx) => (
+                              <div key={tidx} className="text-xs text-gray-600 pl-2">
+                                • {task.name || task} {task.moment && `(${task.moment}, ${task.frequency})`}
+                              </div>
+                            ))}
                           </div>
                         )}
                       </div>
