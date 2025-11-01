@@ -84,7 +84,7 @@ export const mockProductSheets = [
         darkDuration: 0,
         growthDuration: 3,
         specialEquipment: 'Bocaux Mason 1L',
-        tasks: ['Rinçage 2x/jour']
+        tasks: ['Rinçage 2x/jour', 'Vérifier humidité']
       },
       'Micro-pousse sur terreau': {
         soakDuration: 8,
@@ -92,7 +92,7 @@ export const mockProductSheets = [
         darkDuration: 3,
         growthDuration: 7,
         specialEquipment: 'Plateaux 10x20',
-        tasks: ['Arrosage quotidien', 'Rotation des plateaux']
+        tasks: ['Arrosage quotidien', 'Rotation des plateaux', 'Vérifier moisissure']
       }
     }
   },
@@ -107,7 +107,7 @@ export const mockProductSheets = [
         darkDuration: 0,
         growthDuration: 2,
         specialEquipment: 'Bocaux Mason 1L',
-        tasks: ['Rinçage 2x/jour']
+        tasks: ['Rinçage 2x/jour', 'Vérifier humidité']
       },
       'Germination sur plateau': {
         soakDuration: 6,
@@ -115,7 +115,7 @@ export const mockProductSheets = [
         darkDuration: 1,
         growthDuration: 3,
         specialEquipment: 'Plateaux avec couvercle',
-        tasks: ['Brumisation', 'Vérifier humidité']
+        tasks: ['Brumisation', 'Vérifier humidité', 'Rotation des plateaux']
       },
       'Micro-pousse sur terreau': {
         soakDuration: 8,
@@ -123,7 +123,7 @@ export const mockProductSheets = [
         darkDuration: 2,
         growthDuration: 5,
         specialEquipment: 'Plateaux 10x20',
-        tasks: ['Arrosage matin et soir']
+        tasks: ['Arrosage quotidien', 'Rotation des plateaux', 'Vérifier moisissure']
       }
     }
   },
@@ -138,7 +138,7 @@ export const mockProductSheets = [
         darkDuration: 2,
         growthDuration: 8,
         specialEquipment: 'Système hydroponique',
-        tasks: ['Vérifier pH eau', 'Nettoyer système']
+        tasks: ['Vérifier pH eau', 'Nettoyer système', 'Contrôler température']
       },
       'Micro-pousse sur terreau': {
         soakDuration: 12,
@@ -146,7 +146,7 @@ export const mockProductSheets = [
         darkDuration: 3,
         growthDuration: 10,
         specialEquipment: 'Plateaux profonds',
-        tasks: ['Arrosage abondant', 'Retirer coques']
+        tasks: ['Arrosage quotidien', 'Rotation des plateaux', 'Vérifier moisissure']
       }
     }
   }
