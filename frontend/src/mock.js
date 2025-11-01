@@ -105,7 +105,10 @@ export const mockProductSheets = [
         darkDuration: 0,
         growthDuration: 3,
         specialEquipment: 'Bocaux Mason 1L',
-        tasks: ['Rinçage 2x/jour', 'Vérifier humidité']
+        tasks: [
+          { name: 'Rinçage 2x/jour', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
+          { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' }
+        ]
       },
       'Micro-pousse sur terreau': {
         soakDuration: 8,
@@ -113,7 +116,11 @@ export const mockProductSheets = [
         darkDuration: 3,
         growthDuration: 7,
         specialEquipment: 'Plateaux 10x20',
-        tasks: ['Arrosage quotidien', 'Rotation des plateaux', 'Vérifier moisissure']
+        tasks: [
+          { name: 'Arrosage quotidien', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '10 min' },
+          { name: 'Vérifier moisissure', moment: 'Soir', frequency: '1x/jour', duration: '10 min' }
+        ]
       }
     }
   },
@@ -128,7 +135,10 @@ export const mockProductSheets = [
         darkDuration: 0,
         growthDuration: 2,
         specialEquipment: 'Bocaux Mason 1L',
-        tasks: ['Rinçage 2x/jour', 'Vérifier humidité']
+        tasks: [
+          { name: 'Rinçage 2x/jour', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
+          { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' }
+        ]
       },
       'Germination sur plateau': {
         soakDuration: 6,
@@ -136,7 +146,11 @@ export const mockProductSheets = [
         darkDuration: 1,
         growthDuration: 3,
         specialEquipment: 'Plateaux avec couvercle',
-        tasks: ['Brumisation', 'Vérifier humidité', 'Rotation des plateaux']
+        tasks: [
+          { name: 'Brumisation', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
+          { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' },
+          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '5 min' }
+        ]
       },
       'Micro-pousse sur terreau': {
         soakDuration: 8,
@@ -144,7 +158,11 @@ export const mockProductSheets = [
         darkDuration: 2,
         growthDuration: 5,
         specialEquipment: 'Plateaux 10x20',
-        tasks: ['Arrosage quotidien', 'Rotation des plateaux', 'Vérifier moisissure']
+        tasks: [
+          { name: 'Arrosage quotidien', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '10 min' },
+          { name: 'Vérifier moisissure', moment: 'Soir', frequency: '1x/jour', duration: '10 min' }
+        ]
       }
     }
   },
@@ -159,7 +177,11 @@ export const mockProductSheets = [
         darkDuration: 2,
         growthDuration: 8,
         specialEquipment: 'Système hydroponique',
-        tasks: ['Vérifier pH eau', 'Nettoyer système', 'Contrôler température']
+        tasks: [
+          { name: 'Vérifier pH eau', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Nettoyer système', moment: 'Matin', frequency: '1x/semaine', duration: '30 min' },
+          { name: 'Contrôler température', moment: 'Matin et soir', frequency: '2x/jour', duration: '5 min' }
+        ]
       },
       'Micro-pousse sur terreau': {
         soakDuration: 12,
@@ -167,7 +189,11 @@ export const mockProductSheets = [
         darkDuration: 3,
         growthDuration: 10,
         specialEquipment: 'Plateaux profonds',
-        tasks: ['Arrosage quotidien', 'Rotation des plateaux', 'Vérifier moisissure']
+        tasks: [
+          { name: 'Arrosage quotidien', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '10 min' },
+          { name: 'Vérifier moisissure', moment: 'Soir', frequency: '1x/jour', duration: '10 min' }
+        ]
       }
     }
   }
