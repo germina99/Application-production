@@ -297,35 +297,73 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                     {/* Tasks */}
                     <div className="space-y-2">
                       <Label className="text-sm">Tâches récurrentes</Label>
-                      <div className="flex gap-2">
-                        <Input
-                          placeholder="Ex: Rinçage 2x/jour, Arrosage..."
-                          value={taskInput}
-                          onChange={(e) => setTaskInput(e.target.value)}
-                          onKeyPress={(e) => e.key === 'Enter' && (e.preventDefault(), addTask(selectedMethod))}
-                        />
-                        <Button
-                          type="button"
-                          variant="outline"
-                          onClick={() => addTask(selectedMethod)}
-                          size="sm"
-                        >
-                          <Plus className="w-4 h-4" />
-                        </Button>
+                      <div className="space-y-3">
+                        <div className="grid grid-cols-2 gap-2">
+                          <Input
+                            placeholder="Nom de la tâche"
+                            value={taskName}
+                            onChange={(e) => setTaskName(e.target.value)}
+                          />
+                          <select
+                            value={taskMoment}
+                            onChange={(e) => setTaskMoment(e.target.value)}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                          >
+                            <option value="Matin">Matin</option>
+                            <option value="Midi">Midi</option>
+                            <option value="Soir">Soir</option>
+                            <option value="Matin et soir">Matin et soir</option>
+                            <option value="Midi et soir">Midi et soir</option>
+                            <option value="Flexible">Flexible</option>
+                          </select>
+                        </div>
+                        <div className="grid grid-cols-3 gap-2">
+                          <select
+                            value={taskFrequency}
+                            onChange={(e) => setTaskFrequency(e.target.value)}
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                          >
+                            <option value="1x/jour">1x/jour</option>
+                            <option value="2x/jour">2x/jour</option>
+                            <option value="3x/jour">3x/jour</option>
+                            <option value="1x/semaine">1x/semaine</option>
+                            <option value="2x/semaine">2x/semaine</option>
+                          </select>
+                          <Input
+                            placeholder="Durée (ex: 10 min)"
+                            value={taskDuration}
+                            onChange={(e) => setTaskDuration(e.target.value)}
+                          />
+                          <Button
+                            type="button"
+                            variant="outline"
+                            onClick={() => addTask(selectedMethod)}
+                            size="sm"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </Button>
+                        </div>
                       </div>
                       {methods[selectedMethod].tasks.length > 0 && (
-                        <div className="space-y-2 mt-2">
+                        <div className="space-y-2 mt-3">
                           {methods[selectedMethod].tasks.map((task, idx) => (
-                            <div key={idx} className="flex items-center gap-2 bg-white p-2 rounded border">
-                              <span className="flex-1 text-sm">{task}</span>
+                            <div key={idx} className="flex items-center gap-2 bg-white p-3 rounded border">
+                              <div className="flex-1">
+                                <div className="font-medium text-sm">{task.name}</div>
+                                <div className="text-xs text-gray-600 mt-1 flex gap-3">
+                                  <span>📅 {task.moment}</span>
+                                  <span>🔄 {task.frequency}</span>
+                                  <span>⏱️ {task.duration}</span>
+                                </div>
+                              </div>
                               <Button
                                 type="button"
                                 variant="ghost"
                                 size="sm"
                                 onClick={() => removeTask(selectedMethod, idx)}
-                                className="h-6 w-6 p-0"
+                                className="h-8 w-8 p-0"
                               >
-                                <Trash2 className="w-3 h-3 text-red-500" />
+                                <Trash2 className="w-4 h-4 text-red-500" />
                               </Button>
                             </div>
                           ))}
