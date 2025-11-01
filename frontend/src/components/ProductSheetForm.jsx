@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
 import { Input } from './ui/input';
@@ -7,14 +7,25 @@ import { Textarea } from './ui/textarea';
 import { Badge } from './ui/badge';
 import { Plus, Trash2, Leaf, Save } from 'lucide-react';
 import { toast } from '../hooks/use-toast';
-import { productionMethods, saveProductSheet } from '../mock';
+import { productionMethods, saveProductSheet, updateProductSheet } from '../mock';
 
-const ProductSheetForm = ({ onSheetCreated }) => {
+const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = null }) => {
   const [variety, setVariety] = useState('');
   const [description, setDescription] = useState('');
   const [methods, setMethods] = useState({});
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [taskInput, setTaskInput] = useState('');
+
+  useEffect(() => {
+    if (editMode && existingSheet) {
+      setVariety(existingSheet.variety);
+      setDescription(existingSheet.description || '');
+      setMethods(existingSheet.methods || {});
+      if (Object.keys(existingSheet.methods).length > 0) {
+        setSelectedMethod(Object.keys(existingSheet.methods)[0]);
+      }
+    }
+  }, [editMode, existingSheet]);
 
   const addMethod = (method) => {
     if (methods[method]) return;
@@ -37,7 +48,10 @@ const ProductSheetForm = ({ onSheetCreated }) => {
     const newMethods = { ...methods };
     delete newMethods[method];
     setMethods(newMethods);
-    if (selectedMethod === method) setSelectedMethod(null);
+    if (selectedMethod === method) {
+      const remaining = Object.keys(newMethods);
+      setSelectedMethod(remaining.length > 0 ? remaining[0] : null);
+    }
   };
 
   const updateMethodField = (method, field, value) => {
@@ -91,18 +105,27 @@ const ProductSheetForm = ({ onSheetCreated }) => {
       methods
     };
 
-    saveProductSheet(sheet);
-    
-    toast({
-      title: "Fiche produit créée!",
-      description: `Fiche pour ${variety} créée avec succès.`
-    });
+    if (editMode && existingSheet) {
+      updateProductSheet(existingSheet.id, sheet);
+      toast({
+        title: "Fiche modifiée!",
+        description: `Fiche pour ${variety} mise à jour avec succès.`
+      });
+    } else {
+      saveProductSheet(sheet);
+      toast({
+        title: "Fiche produit créée!",
+        description: `Fiche pour ${variety} créée avec succès.`
+      });
+    }
 
-    // Reset form
-    setVariety('');
-    setDescription('');
-    setMethods({});
-    setSelectedMethod(null);
+    if (!editMode) {
+      // Reset form only for new creation
+      setVariety('');
+      setDescription('');
+      setMethods({});
+      setSelectedMethod(null);
+    }
 
     if (onSheetCreated) onSheetCreated();
   };
@@ -114,7 +137,7 @@ const ProductSheetForm = ({ onSheetCreated }) => {
       <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 border-b">
         <CardTitle className="flex items-center gap-2 text-2xl text-green-800">
           <Leaf className="w-7 h-7" />
-          Nouvelle Fiche Produit
+          {editMode ? 'Modifier la Fiche Produit' : 'Nouvelle Fiche Produit'}
         </CardTitle>
         <p className="text-sm text-gray-600 mt-2">
           Définissez les caractéristiques d'une variété selon les différentes méthodes de production
@@ -299,7 +322,7 @@ const ProductSheetForm = ({ onSheetCreated }) => {
 
           <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white">
             <Save className="w-4 h-4 mr-2" />
-            Créer la fiche produit
+            {editMode ? 'Enregistrer les modifications' : 'Créer la fiche produit'}
           </Button>
         </form>
       </CardContent>

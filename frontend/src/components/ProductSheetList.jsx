@@ -1,13 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
-import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { Leaf, Trash2, Clock } from 'lucide-react';
+import { Badge } from './ui/badge';
+import { Leaf, Trash2, Clock, Edit2 } from 'lucide-react';
 import { getProductSheets, deleteProductSheet } from '../mock';
 import { toast } from '../hooks/use-toast';
+import ProductSheetForm from './ProductSheetForm';
 
 const ProductSheetList = ({ refresh }) => {
   const [sheets, setSheets] = useState([]);
+  const [editingSheet, setEditingSheet] = useState(null);
 
   useEffect(() => {
     loadSheets();
@@ -28,6 +30,34 @@ const ProductSheetList = ({ refresh }) => {
       });
     }
   };
+
+  const handleEdit = (sheet) => {
+    setEditingSheet(sheet);
+  };
+
+  const handleEditComplete = () => {
+    setEditingSheet(null);
+    loadSheets();
+  };
+
+  if (editingSheet) {
+    return (
+      <div className="space-y-4">
+        <Button
+          variant="outline"
+          onClick={() => setEditingSheet(null)}
+          className="mb-4"
+        >
+          ← Retour à la liste
+        </Button>
+        <ProductSheetForm
+          editMode={true}
+          existingSheet={editingSheet}
+          onSheetCreated={handleEditComplete}
+        />
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-4">
@@ -50,19 +80,28 @@ const ProductSheetList = ({ refresh }) => {
             <Card key={sheet.id} className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
-                  <div>
+                  <div className="flex-1">
                     <CardTitle className="text-lg text-green-800">{sheet.variety}</CardTitle>
                     {sheet.description && (
                       <p className="text-sm text-gray-600 mt-1">{sheet.description}</p>
                     )}
                   </div>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => handleDelete(sheet.id, sheet.variety)}
-                  >
-                    <Trash2 className="w-4 h-4 text-red-500" />
-                  </Button>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleEdit(sheet)}
+                    >
+                      <Edit2 className="w-4 h-4 text-blue-500" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => handleDelete(sheet.id, sheet.variety)}
+                    >
+                      <Trash2 className="w-4 h-4 text-red-500" />
+                    </Button>
+                  </div>
                 </div>
               </CardHeader>
               <CardContent className="space-y-3">
