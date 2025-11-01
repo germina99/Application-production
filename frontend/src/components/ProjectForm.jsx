@@ -125,25 +125,7 @@ const ProjectForm = ({ onProjectCreated }) => {
     if (!sheet || !sheet.methods[method]) return null;
     
     const methodData = sheet.methods[method];
-    let daysNeeded = Math.ceil(methodData.soakDuration / 24);
-    
-    // Calculate days based on target stage
-    switch (targetStage) {
-      case 'Germination':
-        daysNeeded += methodData.germinationDuration;
-        break;
-      case 'Jeune pousse':
-        daysNeeded += methodData.germinationDuration + methodData.darkDuration;
-        break;
-      case 'Micro-pousse mature':
-        daysNeeded += methodData.germinationDuration + methodData.darkDuration + Math.floor(methodData.growthDuration * 0.7);
-        break;
-      case 'Prêt à récolter':
-        daysNeeded += methodData.germinationDuration + methodData.darkDuration + methodData.growthDuration;
-        break;
-      default:
-        daysNeeded += methodData.germinationDuration + methodData.darkDuration + methodData.growthDuration;
-    }
+    const daysNeeded = calculateDaysToStage(methodData, method, targetStage);
     
     const calculatedDate = new Date(projectDateValue);
     
