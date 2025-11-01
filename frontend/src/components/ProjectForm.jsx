@@ -68,7 +68,14 @@ const ProjectForm = ({ onProjectCreated }) => {
           updated.availableMethods = Object.keys(sheet.methods);
           updated.method = ''; // Reset method selection
           updated.targetStage = ''; // Reset stage selection
+          updated.availableStages = [];
         }
+      }
+      
+      // When method is selected, update available stages
+      if (field === 'method') {
+        updated.availableStages = getStagesByMethodType(value);
+        updated.targetStage = ''; // Reset stage selection
       }
       
       // Recalculate start date when method or stage changes
