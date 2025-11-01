@@ -312,7 +312,7 @@ const GanttView = ({ refresh }) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-green-400 rounded" />
-                    <span>Germination (+ noir si applicable)</span>
+                    <span>Germination (obscurité pendant germination si applicable)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-yellow-400 rounded" />
