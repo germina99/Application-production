@@ -306,7 +306,7 @@ export const calculateDaysToStage = (methodData, method, targetStage) => {
   const methodLower = method.toLowerCase();
   const isGermination = methodLower.includes('germination');
   const soakDays = Math.ceil(methodData.soakDuration / 24);
-  const germinationDays = Math.max(methodData.germinationDuration, methodData.darkDuration); // Juxtaposés
+  const germinationDays = methodData.germinationDuration; // Obscurité se passe pendant
   
   switch (targetStage) {
     case 'Après trempage':
