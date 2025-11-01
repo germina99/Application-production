@@ -8,12 +8,68 @@ export const productionMethods = [
   'Micro-pousse sur tapis de chanvre'
 ];
 
-export const growthStages = [
-  'Germination',
-  'Jeune pousse',
-  'Micro-pousse mature',
-  'Prêt à récolter'
-];
+// Growth stages by production type
+export const getStagesByMethodType = (method) => {
+  const methodLower = method.toLowerCase();
+  
+  // Germination types
+  if (methodLower.includes('germination')) {
+    return [
+      'Après trempage',
+      'Germination',
+      'Jeune germe',
+      'Germe mature',
+      'Prêt à récolter'
+    ];
+  }
+  
+  // Micro-pousse types
+  if (methodLower.includes('micro-pousse')) {
+    return [
+      'Après trempage',
+      'Germination',
+      'Jeune germe',
+      'Germe mature',
+      'Prêt à récolter'
+    ];
+  }
+  
+  // Default stages
+  return [
+    'Après trempage',
+    'Germination',
+    'Jeune germe',
+    'Germe mature',
+    'Prêt à récolter'
+  ];
+};
+
+// Default tasks by method type
+export const getDefaultTasksByMethod = (method) => {
+  const methodLower = method.toLowerCase();
+  
+  if (methodLower.includes('germination en pot')) {
+    return ['Rinçage 2x/jour', 'Vérifier humidité'];
+  }
+  
+  if (methodLower.includes('germination sur plateau')) {
+    return ['Brumisation', 'Vérifier humidité', 'Rotation des plateaux'];
+  }
+  
+  if (methodLower.includes('micro-pousse sur terreau')) {
+    return ['Arrosage quotidien', 'Rotation des plateaux', 'Vérifier moisissure'];
+  }
+  
+  if (methodLower.includes('micro-pousse hydroponique')) {
+    return ['Vérifier pH eau', 'Nettoyer système', 'Contrôler température'];
+  }
+  
+  if (methodLower.includes('micro-pousse sur tapis de chanvre')) {
+    return ['Arrosage par vaporisation', 'Maintenir humidité tapis'];
+  }
+  
+  return ['Arrosage', 'Surveillance'];
+};
 
 // Product sheets - templates for seed varieties
 export const mockProductSheets = [
