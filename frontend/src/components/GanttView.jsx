@@ -277,7 +277,7 @@ const GanttView = ({ refresh }) => {
                                   key={idx}
                                   className={`${phase.color} flex items-center justify-center text-xs font-medium text-white border-r border-white/30`}
                                   style={{ width: `${phase.width}%` }}
-                                  title={`${phase.name}: ${phase.days}j`}
+                                  title={`${phase.name}: ${phase.days}j${phase.subtext ? ' ' + phase.subtext : ''}`}
                                 >
                                   {phase.width > 15 && <span className="truncate px-1">{phase.name}</span>}
                                 </div>
