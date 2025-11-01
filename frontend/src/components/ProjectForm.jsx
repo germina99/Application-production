@@ -45,7 +45,7 @@ const ProjectForm = ({ onProjectCreated }) => {
         quantity: '',
         notes: '',
         availableMethods: [],
-        availableStages: growthStages
+        availableStages: []
       }
     ]);
   };
