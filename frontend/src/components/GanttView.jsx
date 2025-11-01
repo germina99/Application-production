@@ -358,8 +358,10 @@ const GanttView = ({ refresh }) => {
                     <span>Trempage</span>
                   </div>
                   <div className="flex items-center gap-2">
-                    <div className="w-4 h-4 bg-green-400 rounded" />
-                    <span>Germination (obscurité pendant germination si applicable)</span>
+                    <div className="w-4 h-4 bg-green-400 rounded relative overflow-hidden">
+                      <div className="absolute left-0 top-0 bottom-0 w-1/2 bg-gray-700 opacity-60" />
+                    </div>
+                    <span>Germination (zone foncée = obscurité)</span>
                   </div>
                   <div className="flex items-center gap-2">
                     <div className="w-4 h-4 bg-yellow-400 rounded" />
