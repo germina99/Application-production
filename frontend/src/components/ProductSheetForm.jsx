@@ -30,6 +30,9 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
   const addMethod = (method) => {
     if (methods[method]) return;
     
+    // Get default tasks for this method
+    const defaultTasks = getDefaultTasksByMethod(method);
+    
     setMethods(prev => ({
       ...prev,
       [method]: {
@@ -38,7 +41,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
         darkDuration: 2,
         growthDuration: 7,
         specialEquipment: '',
-        tasks: []
+        tasks: defaultTasks
       }
     }));
     setSelectedMethod(method);
