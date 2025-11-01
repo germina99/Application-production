@@ -298,11 +298,25 @@ const GanttView = ({ refresh }) => {
                               {phaseSegments.map((phase, idx) => (
                                 <div
                                   key={idx}
-                                  className={`${phase.color} flex items-center justify-center text-xs font-medium text-white border-r border-white/30`}
+                                  className={`relative ${phase.color} flex items-center justify-center text-xs font-medium text-white border-r border-white/30 overflow-hidden`}
                                   style={{ width: `${phase.width}%` }}
-                                  title={`${phase.name}: ${phase.days}j${phase.subtext ? ' ' + phase.subtext : ''}`}
+                                  title={`${phase.name}: ${phase.days}j${phase.darkOverlay ? ` (dont ${phase.darkDays}j noir)` : ''}`}
                                 >
-                                  {phase.width > 15 && <span className="truncate px-1">{phase.name}</span>}
+                                  {/* Dark overlay for darkness period */}
+                                  {phase.darkOverlay && (
+                                    <div 
+                                      className="absolute left-0 top-0 bottom-0 bg-gray-700 opacity-60"
+                                      style={{ width: `${phase.darkPercentage}%` }}
+                                    />
+                                  )}
+                                  {phase.width > 15 && (
+                                    <span className="relative z-10 truncate px-1">
+                                      {phase.name}
+                                      {phase.darkOverlay && phase.width > 20 && (
+                                        <span className="ml-1 text-[10px]">({phase.darkDays}j🌙)</span>
+                                      )}
+                                    </span>
+                                  )}
                                 </div>
                               ))}
                               
