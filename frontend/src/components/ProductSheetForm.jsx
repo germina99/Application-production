@@ -323,6 +323,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                             onChange={(e) => setTaskFrequency(e.target.value)}
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                           >
+                            <option value="1x">1x (ponctuel)</option>
                             <option value="1x/jour">1x/jour</option>
                             <option value="2x/jour">2x/jour</option>
                             <option value="3x/jour">3x/jour</option>
