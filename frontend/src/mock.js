@@ -166,7 +166,7 @@ export const mockProjects = [
         productSheetId: '1',
         variety: 'Brocoli',
         method: 'Micro-pousse sur terreau',
-        targetStage: 'Micro-pousse mature',
+        targetStage: 'Prêt à récolter',
         startDate: '2025-07-01',
         quantity: '2 plateaux',
         notes: 'Pour photo macro'
@@ -176,7 +176,7 @@ export const mockProjects = [
         productSheetId: '2',
         variety: 'Radis',
         method: 'Micro-pousse sur terreau',
-        targetStage: 'Micro-pousse mature',
+        targetStage: 'Germe mature',
         startDate: '2025-07-03',
         quantity: '1 plateau',
         notes: 'Contraste de couleur'
