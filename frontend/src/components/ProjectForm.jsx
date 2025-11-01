@@ -129,12 +129,12 @@ const ProjectForm = ({ onProjectCreated }) => {
     
     const calculatedDate = new Date(projectDateValue);
     
-    // For test, project date is start date
+    // For test, project date IS the start date (no calculation needed)
     if (projectTypeValue === 'test') {
       return calculatedDate;
     }
     
-    // For photo and tournage, project date is end date, so subtract days
+    // For photo and tournage, project date is end date, so subtract days to get start date
     calculatedDate.setDate(calculatedDate.getDate() - daysNeeded);
     return calculatedDate;
   };
