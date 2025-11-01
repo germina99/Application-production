@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { Button } from './components/ui/button';
 import { Input } from './components/ui/input';
 import { Label } from './components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from './components/ui/card';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './components/ui/tabs';
 import { Toaster } from './components/ui/toaster';
-import { Sprout, LogOut, Plus, Calendar, CheckSquare } from 'lucide-react';
-import ProductionForm from './components/ProductionForm';
+import { Sprout, LogOut, Plus, Calendar, CheckSquare, Leaf, Camera } from 'lucide-react';
+import ProductSheetForm from './components/ProductSheetForm';
+import ProductSheetList from './components/ProductSheetList';
+import ProjectForm from './components/ProjectForm';
 import GanttView from './components/GanttView';
 import DailyTasks from './components/DailyTasks';
 import { mockUser } from './mock';
@@ -79,7 +81,7 @@ const Dashboard = ({ onLogout }) => {
   const [refreshKey, setRefreshKey] = useState(0);
   const [activeTab, setActiveTab] = useState('gantt');
 
-  const handleProductionCreated = () => {
+  const handleRefresh = () => {
     setRefreshKey(prev => prev + 1);
   };
 
@@ -109,18 +111,26 @@ const Dashboard = ({ onLogout }) => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-          <TabsList className="grid w-full max-w-2xl mx-auto grid-cols-3 bg-white shadow-sm">
-            <TabsTrigger value="gantt" className="gap-2">
+          <TabsList className="grid w-full max-w-3xl mx-auto grid-cols-5 bg-white shadow-sm">
+            <TabsTrigger value="gantt" className="gap-2 text-xs sm:text-sm">
               <Calendar className="w-4 h-4" />
-              Gantt
+              <span className="hidden sm:inline">Gantt</span>
             </TabsTrigger>
-            <TabsTrigger value="tasks" className="gap-2">
+            <TabsTrigger value="tasks" className="gap-2 text-xs sm:text-sm">
               <CheckSquare className="w-4 h-4" />
-              Tâches
+              <span className="hidden sm:inline">Tâches</span>
             </TabsTrigger>
-            <TabsTrigger value="create" className="gap-2">
+            <TabsTrigger value="products" className="gap-2 text-xs sm:text-sm">
+              <Leaf className="w-4 h-4" />
+              <span className="hidden sm:inline">Produits</span>
+            </TabsTrigger>
+            <TabsTrigger value="new-product" className="gap-2 text-xs sm:text-sm">
               <Plus className="w-4 h-4" />
-              Nouvelle fiche
+              <span className="hidden sm:inline">Fiche</span>
+            </TabsTrigger>
+            <TabsTrigger value="new-project" className="gap-2 text-xs sm:text-sm">
+              <Camera className="w-4 h-4" />
+              <span className="hidden sm:inline">Projet</span>
             </TabsTrigger>
           </TabsList>
 
@@ -132,11 +142,26 @@ const Dashboard = ({ onLogout }) => {
             <DailyTasks />
           </TabsContent>
 
-          <TabsContent value="create" className="space-y-6">
-            <ProductionForm onProductionCreated={() => {
-              handleProductionCreated();
-              setActiveTab('gantt');
-            }} />
+          <TabsContent value="products" className="space-y-6">
+            <ProductSheetList refresh={refreshKey} />
+          </TabsContent>
+
+          <TabsContent value="new-product" className="space-y-6">
+            <ProductSheetForm
+              onSheetCreated={() => {
+                handleRefresh();
+                setActiveTab('products');
+              }}
+            />
+          </TabsContent>
+
+          <TabsContent value="new-project" className="space-y-6">
+            <ProjectForm
+              onProjectCreated={() => {
+                handleRefresh();
+                setActiveTab('gantt');
+              }}
+            />
           </TabsContent>
         </Tabs>
       </main>
