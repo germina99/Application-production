@@ -292,13 +292,53 @@ export const calculateEndDate = (startDate, productSheetId, method) => {
   const methodData = sheet.methods[method];
   const totalDays = 
     Math.ceil(methodData.soakDuration / 24) + 
-    methodData.germinationDuration + 
-    methodData.darkDuration + 
+    Math.max(methodData.germinationDuration, methodData.darkDuration) + // Obscurité juxtaposée
     methodData.growthDuration;
   
   const end = new Date(startDate);
   end.setDate(end.getDate() + totalDays);
   return end;
+};
+
+// Calculate days until a specific stage
+export const calculateDaysToStage = (methodData, method, targetStage) => {
+  const methodLower = method.toLowerCase();
+  const isGermination = methodLower.includes('germination');
+  const soakDays = Math.ceil(methodData.soakDuration / 24);
+  const germinationDays = Math.max(methodData.germinationDuration, methodData.darkDuration); // Juxtaposés
+  
+  switch (targetStage) {
+    case 'Après trempage':
+      return soakDays;
+    
+    case 'Germination':
+      return soakDays + germinationDays;
+    
+    case 'Jeune germe':
+      if (isGermination) {
+        return soakDays + germinationDays + 3; // 3 jours après germination
+      } else {
+        return soakDays + germinationDays + 2; // 2 jours pour micro-pousse
+      }
+    
+    case 'Germe mature':
+      if (isGermination) {
+        // 1 jour avant récolte
+        const totalDays = soakDays + germinationDays + methodData.growthDuration;
+        return totalDays - 1;
+      } else {
+        // Tous les 3 jours selon durée de culture (on prend le milieu)
+        const totalDays = soakDays + germinationDays + methodData.growthDuration;
+        const midPoint = Math.floor((soakDays + germinationDays + totalDays) / 2);
+        return midPoint;
+      }
+    
+    case 'Prêt à récolter':
+      return soakDays + germinationDays + methodData.growthDuration;
+    
+    default:
+      return soakDays + germinationDays + methodData.growthDuration;
+  }
 };
 
 // Get all productions from all projects
