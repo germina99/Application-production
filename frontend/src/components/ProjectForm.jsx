@@ -289,8 +289,8 @@ const ProjectForm = ({ onProjectCreated }) => {
                 </div>
                 <p className="text-xs text-gray-500">
                   {projectType === 'test' 
-                    ? 'Date de début du test'
-                    : 'Date de fin (photo/tournage)'}
+                    ? '📅 Date de début du test'
+                    : '🎬 Date de fin (photo/tournage)'}
                 </p>
               </div>
             </div>
