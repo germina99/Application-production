@@ -453,14 +453,15 @@ export const getDailyTasks = (date) => {
     
     // Germination phase
     if (daysSinceStart > 0 && daysSinceStart <= methodData.germinationDuration) {
-      methodData.tasks.forEach((taskName, idx) => {
+      methodData.tasks.forEach((task, idx) => {
+        const taskData = typeof task === 'string' ? { name: task } : task;
         tasks.push({
           id: `${production.id}-germ-${idx}`,
           productionId: production.id,
           variety: production.variety,
-          task: taskName,
-          duration: '15 min',
-          time: '2x/jour',
+          task: taskData.name,
+          duration: taskData.duration || '15 min',
+          time: taskData.moment || '2x/jour',
           projectName: production.projectName,
           phase: 'germination'
         });
@@ -468,8 +469,7 @@ export const getDailyTasks = (date) => {
     }
     
     // Dark phase
-    if (daysSinceStart > methodData.germinationDuration && 
-        daysSinceStart <= methodData.germinationDuration + methodData.darkDuration) {
+    if (daysSinceStart > 0 && daysSinceStart <= Math.max(methodData.germinationDuration, methodData.darkDuration) && methodData.darkDuration > 0) {
       tasks.push({
         id: `${production.id}-dark`,
         productionId: production.id,
@@ -483,15 +483,16 @@ export const getDailyTasks = (date) => {
     }
     
     // Growth phase
-    if (daysSinceStart > methodData.germinationDuration + methodData.darkDuration) {
-      methodData.tasks.forEach((taskName, idx) => {
+    if (daysSinceStart > methodData.germinationDuration) {
+      methodData.tasks.forEach((task, idx) => {
+        const taskData = typeof task === 'string' ? { name: task } : task;
         tasks.push({
           id: `${production.id}-growth-${idx}`,
           productionId: production.id,
           variety: production.variety,
-          task: taskName,
-          duration: '20 min',
-          time: '1-2x/jour',
+          task: taskData.name,
+          duration: taskData.duration || '20 min',
+          time: taskData.moment || '1-2x/jour',
           projectName: production.projectName,
           phase: 'croissance'
         });
