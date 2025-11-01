@@ -290,9 +290,10 @@ export const calculateEndDate = (startDate, productSheetId, method) => {
   if (!sheet || !sheet.methods[method]) return null;
   
   const methodData = sheet.methods[method];
+  // Obscurité se passe pendant germination, donc pas d'addition
   const totalDays = 
     Math.ceil(methodData.soakDuration / 24) + 
-    Math.max(methodData.germinationDuration, methodData.darkDuration) + // Obscurité juxtaposée
+    methodData.germinationDuration + 
     methodData.growthDuration;
   
   const end = new Date(startDate);
