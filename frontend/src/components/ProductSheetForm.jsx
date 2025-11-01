@@ -71,16 +71,28 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
   };
 
   const addTask = (method) => {
-    if (!taskInput.trim()) return;
+    if (!taskName.trim()) return;
+    
+    const newTask = {
+      name: taskName.trim(),
+      moment: taskMoment,
+      frequency: taskFrequency,
+      duration: taskDuration
+    };
     
     setMethods(prev => ({
       ...prev,
       [method]: {
         ...prev[method],
-        tasks: [...prev[method].tasks, taskInput.trim()]
+        tasks: [...prev[method].tasks, newTask]
       }
     }));
-    setTaskInput('');
+    
+    // Reset task inputs
+    setTaskName('');
+    setTaskMoment('Matin');
+    setTaskFrequency('1x/jour');
+    setTaskDuration('10 min');
   };
 
   const removeTask = (method, taskIndex) => {
