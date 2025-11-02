@@ -64,8 +64,8 @@ export const mockProductSheets = [
         growthDuration: 3,
         specialEquipment: 'Bocaux Mason 1L',
         tasks: [
-          { name: 'Rinçage 2x/jour', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
-          { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' }
+          { name: 'Rinçage', when: 'Germination', frequency: '2x/jour', duration: '10 min' },
+          { name: 'Vérifier humidité', when: 'Germination', frequency: '1x/jour', duration: '5 min' }
         ]
       },
       'Micro-pousse sur terreau': {
@@ -75,9 +75,9 @@ export const mockProductSheets = [
         growthDuration: 7,
         specialEquipment: 'Plateaux 10x20',
         tasks: [
-          { name: 'Arrosage quotidien', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
-          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '10 min' },
-          { name: 'Vérifier moisissure', moment: 'Soir', frequency: '1x/jour', duration: '10 min' }
+          { name: 'Arrosage', when: 'Croissance', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Rotation des plateaux', when: 'Croissance', frequency: '1x/jour', duration: '10 min' },
+          { name: 'Vérifier moisissure', when: 'Croissance', frequency: '1x/jour', duration: '10 min' }
         ]
       }
     }
@@ -94,8 +94,8 @@ export const mockProductSheets = [
         growthDuration: 2,
         specialEquipment: 'Bocaux Mason 1L',
         tasks: [
-          { name: 'Rinçage 2x/jour', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
-          { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' }
+          { name: 'Rinçage', when: 'Germination', frequency: '2x/jour', duration: '10 min' },
+          { name: 'Vérifier humidité', when: 'Germination', frequency: '1x/jour', duration: '5 min' }
         ]
       },
       'Germination sur plateau': {
@@ -105,9 +105,9 @@ export const mockProductSheets = [
         growthDuration: 3,
         specialEquipment: 'Plateaux avec couvercle',
         tasks: [
-          { name: 'Brumisation', moment: 'Matin et soir', frequency: '2x/jour', duration: '10 min' },
-          { name: 'Vérifier humidité', moment: 'Matin', frequency: '1x/jour', duration: '5 min' },
-          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '5 min' }
+          { name: 'Brumisation', when: 'Germination', frequency: '2x/jour', duration: '10 min' },
+          { name: 'Vérifier humidité', when: 'Germination', frequency: '1x/jour', duration: '5 min' },
+          { name: 'Rotation des plateaux', when: 'Croissance', frequency: '1x/jour', duration: '5 min' }
         ]
       },
       'Micro-pousse sur terreau': {
@@ -117,9 +117,9 @@ export const mockProductSheets = [
         growthDuration: 5,
         specialEquipment: 'Plateaux 10x20',
         tasks: [
-          { name: 'Arrosage quotidien', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
-          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '10 min' },
-          { name: 'Vérifier moisissure', moment: 'Soir', frequency: '1x/jour', duration: '10 min' }
+          { name: 'Arrosage', when: 'Croissance', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Rotation des plateaux', when: 'Croissance', frequency: '1x/jour', duration: '10 min' },
+          { name: 'Vérifier moisissure', when: 'Croissance', frequency: '1x/jour', duration: '10 min' }
         ]
       }
     }
@@ -136,9 +136,9 @@ export const mockProductSheets = [
         growthDuration: 8,
         specialEquipment: 'Système hydroponique',
         tasks: [
-          { name: 'Vérifier pH eau', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
-          { name: 'Nettoyer système', moment: 'Matin', frequency: '1x/semaine', duration: '30 min' },
-          { name: 'Contrôler température', moment: 'Matin et soir', frequency: '2x/jour', duration: '5 min' }
+          { name: 'Vérifier pH eau', when: 'Croissance', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Nettoyer système', when: 'Début', frequency: '1x/semaine', duration: '30 min' },
+          { name: 'Contrôler température', when: 'Croissance', frequency: '2x/jour', duration: '5 min' }
         ]
       },
       'Micro-pousse sur terreau': {
@@ -148,9 +148,9 @@ export const mockProductSheets = [
         growthDuration: 10,
         specialEquipment: 'Plateaux profonds',
         tasks: [
-          { name: 'Arrosage quotidien', moment: 'Matin', frequency: '1x/jour', duration: '15 min' },
-          { name: 'Rotation des plateaux', moment: 'Midi', frequency: '1x/jour', duration: '10 min' },
-          { name: 'Vérifier moisissure', moment: 'Soir', frequency: '1x/jour', duration: '10 min' }
+          { name: 'Arrosage', when: 'Croissance', frequency: '1x/jour', duration: '15 min' },
+          { name: 'Rotation des plateaux', when: 'Croissance', frequency: '1x/jour', duration: '10 min' },
+          { name: 'Vérifier moisissure', when: 'Croissance', frequency: '1x/jour', duration: '10 min' }
         ]
       }
     }
