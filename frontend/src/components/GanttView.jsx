@@ -33,21 +33,36 @@ const GanttView = ({ refresh }) => {
   const allProductions = getAllProductions();
 
   const getDateRange = () => {
-    if (allProductions.length === 0) return { start: new Date(), end: new Date() };
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
     
-    const dates = allProductions.flatMap(p => [
-      new Date(p.startDate),
-      new Date(p.endDate)
-    ]);
+    // Calculer la plage basée sur l'horizon et les dates de production
+    let earliestDate = new Date(today);
+    let latestDate = new Date(today);
     
-    const start = new Date(Math.min(...dates));
-    const end = new Date(Math.max(...dates));
+    if (allProductions.length > 0) {
+      const dates = allProductions.flatMap(p => [
+        new Date(p.startDate),
+        new Date(p.endDate)
+      ]);
+      
+      earliestDate = new Date(Math.min(today, ...dates));
+      latestDate = new Date(Math.max(today, ...dates));
+    }
     
-    // Add padding
-    start.setDate(start.getDate() - 1);
-    end.setDate(end.getDate() + 2);
+    // S'assurer que l'horizon couvre au moins la période demandée
+    const horizonEnd = new Date(today);
+    horizonEnd.setDate(horizonEnd.getDate() + horizon);
     
-    return { start, end };
+    if (latestDate < horizonEnd) {
+      latestDate = horizonEnd;
+    }
+    
+    // Ajouter un jour de padding de chaque côté
+    earliestDate.setDate(earliestDate.getDate() - 1);
+    latestDate.setDate(latestDate.getDate() + 1);
+    
+    return { start: earliestDate, end: latestDate };
   };
 
   const { start: rangeStart, end: rangeEnd } = getDateRange();
