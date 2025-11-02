@@ -15,7 +15,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
   const [methods, setMethods] = useState({});
   const [selectedMethod, setSelectedMethod] = useState(null);
   const [taskName, setTaskName] = useState('');
-  const [taskMoment, setTaskMoment] = useState('Matin');
+  const [taskWhen, setTaskWhen] = useState('Début');
   const [taskFrequency, setTaskFrequency] = useState('1x/jour');
   const [taskDuration, setTaskDuration] = useState('10 min');
 
