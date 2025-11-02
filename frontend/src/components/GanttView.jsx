@@ -434,10 +434,20 @@ const GanttView = ({ refresh }) => {
                 </div>
               </div>
               <div>
-                <p className="text-sm font-semibold text-gray-700 mb-2">Indicateur:</p>
-                <div className="flex items-center gap-2 text-sm">
-                  <div className="w-1 h-6 bg-red-500" />
-                  <span>Progression actuelle (aujourd'hui)</span>
+                <p className="text-sm font-semibold text-gray-700 mb-2">Indicateurs:</p>
+                <div className="flex items-center gap-6 text-sm flex-wrap">
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-6 bg-blue-500 opacity-50 relative">
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full" />
+                    </div>
+                    <span>Aujourd'hui</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <div className="w-1 h-6 bg-red-500 opacity-70 relative">
+                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-500 rounded-full" />
+                    </div>
+                    <span>Date du projet</span>
+                  </div>
                 </div>
               </div>
             </div>
