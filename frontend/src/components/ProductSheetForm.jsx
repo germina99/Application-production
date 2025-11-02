@@ -7,7 +7,7 @@ import { Textarea } from './ui/textarea';
 import { Badge } from './ui/badge';
 import { Plus, Trash2, Leaf, Save } from 'lucide-react';
 import { toast } from '../hooks/use-toast';
-import { productionMethods, saveProductSheet, updateProductSheet, getDefaultTasksByMethod } from '../mock';
+import { productionMethods, saveProductSheet, updateProductSheet, getDefaultTasksByMethod, getTimeOfDayFromFrequency } from '../mock';
 
 const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = null }) => {
   const [variety, setVariety] = useState('');
