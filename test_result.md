@@ -180,6 +180,18 @@ frontend:
       - working: true
         agent: "main"
         comment: "Legend fully implemented showing production phases (trempage, germination with dark overlay, croissance) and indicators (today=blue, project date=red). Located at bottom of Gantt view at lines 416-453."
+      
+  - task: "Gantt Chart Date Alignment"
+    implemented: true
+    working: true
+    file: "src/components/GanttView.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: true
+        agent: "main"
+        comment: "Fixed date scale alignment issues. Updated date calculations to use Math.round instead of Math.floor/ceil for consistent positioning. Normalized all dates to midnight (00:00:00). Updated mock data with current November 2025 dates. Bars and vertical lines now align correctly with the date grid."
 
   - task: "Daily Tasks View"
     implemented: true
