@@ -152,8 +152,8 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
 
   return (
     <Card className="w-full max-w-5xl mx-auto shadow-lg">
-      <CardHeader className="bg-gradient-to-r from-green-50 to-emerald-50 border-b">
-        <CardTitle className="flex items-center gap-2 text-2xl text-green-800">
+      <CardHeader className="bg-gradient-to-r from-germina-light to-germina-light border-b">
+        <CardTitle className="flex items-center gap-2 text-2xl text-germina">
           <Leaf className="w-7 h-7" />
           {editMode ? 'Modifier la Fiche Produit' : 'Nouvelle Fiche Produit'}
         </CardTitle>
