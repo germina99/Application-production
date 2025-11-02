@@ -146,11 +146,14 @@ const ProductSheetList = ({ refresh }) => {
                         {methodData.tasks.length > 0 && (
                           <div className="mt-2 space-y-1">
                             <span className="text-gray-500 text-xs">Tâches:</span>
-                            {methodData.tasks.map((task, tidx) => (
-                              <div key={tidx} className="text-xs text-gray-600 pl-2">
-                                • {task.name || task} {task.moment && `(${task.moment}, ${task.frequency})`}
-                              </div>
-                            ))}
+                            {methodData.tasks.map((task, tidx) => {
+                              const timeOfDay = task.frequency ? getTimeOfDayFromFrequency(task.frequency) : '';
+                              return (
+                                <div key={tidx} className="text-xs text-gray-600 pl-2">
+                                  • {task.name || task} {task.when && `(${task.when}, ${task.frequency} - ${timeOfDay})`}
+                                </div>
+                              );
+                            })}
                           </div>
                         )}
                       </div>
