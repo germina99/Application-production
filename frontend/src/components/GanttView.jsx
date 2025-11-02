@@ -260,13 +260,13 @@ const GanttView = ({ refresh }) => {
                       <div
                         key={idx}
                         className={`flex-1 text-center text-xs border-l px-1 ${isToday ? 'bg-blue-100' : ''}`}
-                        style={{ minWidth: '50px' }}
+                        style={{ minWidth: '60px' }}
                       >
-                        <div className={`font-semibold ${isToday ? 'text-blue-700' : 'text-green-700'}`}>
-                          {day.getDate()}
+                        <div className={`font-semibold ${isToday ? 'text-blue-700' : 'text-germina'}`}>
+                          {day.toLocaleDateString('fr-FR', { weekday: 'short' })}
                         </div>
-                        <div className="text-gray-500 text-[10px]">
-                          {day.toLocaleDateString('fr-FR', { month: 'short' })}
+                        <div className={`text-xs ${isToday ? 'text-blue-700 font-bold' : 'text-gray-700'}`}>
+                          {day.getDate()} {day.toLocaleDateString('fr-FR', { month: 'short' })}
                         </div>
                       </div>
                     );
