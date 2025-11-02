@@ -92,11 +92,11 @@ const Dashboard = ({ onLogout }) => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className="bg-green-600 w-10 h-10 rounded-full flex items-center justify-center">
-                <Sprout className="w-6 h-6 text-white" />
+              <div className="w-10 h-10 rounded-full flex items-center justify-center overflow-hidden bg-white">
+                <img src="/logo-germina.png" alt="Germina" className="w-8 h-8 object-contain" />
               </div>
               <div>
-                <h1 className="text-2xl font-bold text-green-800">Germina</h1>
+                <h1 className="text-2xl font-bold" style={{ color: '#48bf20' }}>Germina</h1>
                 <p className="text-xs text-gray-600">Suivi de production</p>
               </div>
             </div>
