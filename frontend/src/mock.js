@@ -44,11 +44,11 @@ export const getStagesByMethodType = (method) => {
   ];
 };
 
-import { getDefaultTasksByMethod as getDefaultTasksFromConfig, getTimeOfDayFromFrequency } from './config/defaultTasks';
+import { getDefaultTasksByMethod as getDefaultTasksFromConfig, getTimeOfDayFromFrequency as getTimeOfDayMapping } from './config/defaultTasks';
 
 // Export the functions from config
 export const getDefaultTasksByMethod = getDefaultTasksFromConfig;
-export const getTimeOfDayFromFrequency = getTimeOfDayFromFrequency;
+export const getTimeOfDayFromFrequency = getTimeOfDayMapping;
 
 // Product sheets - templates for seed varieties
 export const mockProductSheets = [
