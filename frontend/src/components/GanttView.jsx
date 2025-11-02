@@ -8,6 +8,7 @@ import { toast } from '../hooks/use-toast';
 
 const GanttView = ({ refresh }) => {
   const [projects, setProjects] = useState([]);
+  const [horizon, setHorizon] = useState(14); // 2 semaines par défaut
 
   useEffect(() => {
     loadData();
