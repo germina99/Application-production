@@ -394,7 +394,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
             )}
           </div>
 
-          <Button type="submit" className="w-full bg-green-600 hover:bg-green-700 text-white">
+          <Button type="submit" className="w-full bg-germina text-white">
             <Save className="w-4 h-4 mr-2" />
             {editMode ? 'Enregistrer les modifications' : 'Créer la fiche produit'}
           </Button>
