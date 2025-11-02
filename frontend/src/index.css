@@ -82,6 +82,31 @@ code {
     }
 }
 
+/* Germina custom colors */
+.text-germina {
+    color: #48bf20;
+}
+
+.bg-germina {
+    background-color: #48bf20;
+}
+
+.bg-germina:hover {
+    background-color: #3da518;
+}
+
+.border-germina {
+    border-color: #48bf20;
+}
+
+.from-germina-light {
+    --tw-gradient-from: #e8f5e0;
+}
+
+.to-germina-light {
+    --tw-gradient-to: #f0f9ec;
+}
+
 @layer base {
     [data-debug-wrapper="true"] {
         display: contents !important;
