@@ -305,16 +305,23 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                             onChange={(e) => setTaskName(e.target.value)}
                           />
                           <select
-                            value={taskMoment}
-                            onChange={(e) => setTaskMoment(e.target.value)}
+                            value={taskWhen}
+                            onChange={(e) => setTaskWhen(e.target.value)}
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                           >
-                            <option value="Matin">Matin</option>
-                            <option value="Midi">Midi</option>
-                            <option value="Soir">Soir</option>
-                            <option value="Matin et soir">Matin et soir</option>
-                            <option value="Midi et soir">Midi et soir</option>
-                            <option value="Flexible">Flexible</option>
+                            <option value="Début">Début</option>
+                            <option value="Jour 1">Jour 1</option>
+                            <option value="Jour 2">Jour 2</option>
+                            <option value="Jour 3">Jour 3</option>
+                            <option value="Jour 4">Jour 4</option>
+                            <option value="Jour 5">Jour 5</option>
+                            <option value="Jour 6">Jour 6</option>
+                            <option value="Jour 7">Jour 7</option>
+                            <option value="Trempage">Trempage</option>
+                            <option value="Germination">Germination</option>
+                            <option value="Obscurité">Obscurité</option>
+                            <option value="Croissance">Croissance</option>
+                            <option value="Fin">Fin</option>
                           </select>
                         </div>
                         <div className="grid grid-cols-3 gap-2">
@@ -330,11 +337,18 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                             <option value="1x/semaine">1x/semaine</option>
                             <option value="2x/semaine">2x/semaine</option>
                           </select>
-                          <Input
-                            placeholder="Durée (ex: 10 min)"
+                          <select
                             value={taskDuration}
                             onChange={(e) => setTaskDuration(e.target.value)}
-                          />
+                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                          >
+                            <option value="5 min">5 min</option>
+                            <option value="10 min">10 min</option>
+                            <option value="15 min">15 min</option>
+                            <option value="30 min">30 min</option>
+                            <option value="45 min">45 min</option>
+                            <option value="1h">1h</option>
+                          </select>
                           <Button
                             type="button"
                             variant="outline"
@@ -347,27 +361,30 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                       </div>
                       {methods[selectedMethod].tasks.length > 0 && (
                         <div className="space-y-2 mt-3">
-                          {methods[selectedMethod].tasks.map((task, idx) => (
-                            <div key={idx} className="flex items-center gap-2 bg-white p-3 rounded border">
-                              <div className="flex-1">
-                                <div className="font-medium text-sm">{task.name}</div>
-                                <div className="text-xs text-gray-600 mt-1 flex gap-3">
-                                  <span>📅 {task.moment}</span>
-                                  <span>🔄 {task.frequency}</span>
-                                  <span>⏱️ {task.duration}</span>
+                          {methods[selectedMethod].tasks.map((task, idx) => {
+                            const timeOfDay = getTimeOfDayFromFrequency(task.frequency);
+                            return (
+                              <div key={idx} className="flex items-center gap-2 bg-white p-3 rounded border">
+                                <div className="flex-1">
+                                  <div className="font-medium text-sm">{task.name}</div>
+                                  <div className="text-xs text-gray-600 mt-1 flex gap-3">
+                                    <span>📅 {task.when}</span>
+                                    <span>🔄 {task.frequency} ({timeOfDay})</span>
+                                    <span>⏱️ {task.duration}</span>
+                                  </div>
                                 </div>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="sm"
+                                  onClick={() => removeTask(selectedMethod, idx)}
+                                  className="h-8 w-8 p-0"
+                                >
+                                  <Trash2 className="w-4 h-4 text-red-500" />
+                                </Button>
                               </div>
-                              <Button
-                                type="button"
-                                variant="ghost"
-                                size="sm"
-                                onClick={() => removeTask(selectedMethod, idx)}
-                                className="h-8 w-8 p-0"
-                              >
-                                <Trash2 className="w-4 h-4 text-red-500" />
-                              </Button>
-                            </div>
-                          ))}
+                            );
+                          })}
                         </div>
                       )}
                     </div>
