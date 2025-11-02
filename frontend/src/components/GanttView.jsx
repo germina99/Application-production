@@ -348,7 +348,6 @@ const GanttView = ({ refresh }) => {
                                   style={{ width: `${phase.width}%` }}
                                   title={`${phase.name}: ${phase.days}j${phase.darkOverlay ? ` (dont ${phase.darkDays}j noir)` : ''}`}
                                 >
-                                  {/* Dark overlay for darkness period */}
                                   {phase.darkOverlay && (
                                     <div 
                                       className="absolute left-0 top-0 bottom-0 bg-gray-700 opacity-60"
@@ -367,21 +366,40 @@ const GanttView = ({ refresh }) => {
                               ))}
                               
                               {progressPercent !== null && progressPercent < 100 && (
-                                <div className="absolute top-0 bottom-0 w-1 bg-red-500 shadow-lg" style={{ left: `${progressPercent}%` }}>
+                                <div
+                                  className="absolute top-0 bottom-0 w-1 bg-red-500 shadow-lg"
+                                  style={{ left: `${progressPercent}%` }}
+                                >
                                   <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-red-500" />
                                   <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-b-4 border-transparent border-b-red-500" />
                                 </div>
                               )}
                             </div>
                             
+                            {/* Grid lines + lignes spéciales */}
                             {days.map((day, idx) => {
                               const isToday = day.toDateString() === new Date().toDateString();
+                              const isProjectDate = day.toDateString() === new Date(project.projectDate).toDateString();
+                              
                               return (
-                                <div
-                                  key={idx}
-                                  className={`absolute top-0 bottom-0 border-l ${isToday ? 'border-blue-400 border-2' : 'border-gray-200'}`}
-                                  style={{ left: `${(idx / daysDiff) * 100}%` }}
-                                />
+                                <div key={idx} className="absolute top-0 bottom-0" style={{ left: `${(idx / daysDiff) * 100}%` }}>
+                                  {/* Ligne normale */}
+                                  <div className={`w-px h-full ${isToday || isProjectDate ? '' : 'border-l border-gray-200'}`} />
+                                  
+                                  {/* Ligne bleue pour aujourd'hui */}
+                                  {isToday && (
+                                    <div className="absolute top-0 bottom-0 w-1 bg-blue-500 opacity-50" style={{ left: '-2px' }}>
+                                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full" />
+                                    </div>
+                                  )}
+                                  
+                                  {/* Ligne rouge pour la date du projet */}
+                                  {isProjectDate && (
+                                    <div className="absolute top-0 bottom-0 w-1 bg-red-500 opacity-70" style={{ left: '-2px' }}>
+                                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-500 rounded-full" />
+                                    </div>
+                                  )}
+                                </div>
                               );
                             })}
                           </div>
