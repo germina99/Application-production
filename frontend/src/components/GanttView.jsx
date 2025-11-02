@@ -190,8 +190,8 @@ const GanttView = ({ refresh }) => {
   return (
     <div className="space-y-6">
       <Card>
-        <CardHeader className="border-b bg-gradient-to-r from-green-50 to-emerald-50">
-          <CardTitle className="flex items-center gap-2 text-green-800">
+        <CardHeader className="border-b bg-gradient-to-r from-germina-light to-germina-light">
+          <CardTitle className="flex items-center gap-2 text-germina">
             <CalendarDays className="w-6 h-6" />
             Diagramme de Gantt - Projets de Contenu
           </CardTitle>
