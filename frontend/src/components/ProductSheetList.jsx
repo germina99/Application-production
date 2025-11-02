@@ -17,7 +17,9 @@ const ProductSheetList = ({ refresh }) => {
 
   const loadSheets = () => {
     const data = getProductSheets();
-    setSheets(data);
+    // Trier par ordre alphabétique de variété
+    const sortedData = data.sort((a, b) => a.variety.localeCompare(b.variety, 'fr', { sensitivity: 'base' }));
+    setSheets(sortedData);
   };
 
   const handleDelete = (id, variety) => {
