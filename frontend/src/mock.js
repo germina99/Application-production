@@ -163,7 +163,7 @@ export const mockProjects = [
     id: '1',
     projectName: 'Contenu Instagram - Semaine 1',
     projectDescription: 'Photos pour le feed Instagram',
-    projectDate: '2025-07-10',
+    projectDate: '2025-11-10',
     projectType: 'photo',
     productions: [
       {
@@ -172,7 +172,7 @@ export const mockProjects = [
         variety: 'Brocoli',
         method: 'Micro-pousse sur terreau',
         targetStage: 'Prêt à récolter',
-        startDate: '2025-07-01',
+        startDate: '2025-11-01',
         quantity: '2 plateaux',
         notes: 'Pour photo macro'
       },
@@ -182,7 +182,7 @@ export const mockProjects = [
         variety: 'Radis',
         method: 'Micro-pousse sur terreau',
         targetStage: 'Germe mature',
-        startDate: '2025-07-03',
+        startDate: '2025-11-03',
         quantity: '1 plateau',
         notes: 'Contraste de couleur'
       }
@@ -193,7 +193,7 @@ export const mockProjects = [
     id: '2',
     projectName: 'Photo produit - Germination',
     projectDescription: 'Photos produits pour le site web',
-    projectDate: '2025-07-09',
+    projectDate: '2025-11-09',
     projectType: 'photo',
     productions: [
       {
@@ -202,7 +202,7 @@ export const mockProjects = [
         variety: 'Radis',
         method: 'Germination en pot',
         targetStage: 'Germination',
-        startDate: '2025-07-05',
+        startDate: '2025-11-05',
         quantity: '3 bocaux',
         notes: 'Différents stades'
       }
