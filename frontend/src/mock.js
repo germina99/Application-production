@@ -413,13 +413,14 @@ export const getDailyTasks = (date) => {
     if (daysSinceStart > 0 && daysSinceStart <= methodData.germinationDuration) {
       methodData.tasks.forEach((task, idx) => {
         const taskData = typeof task === 'string' ? { name: task } : task;
+        const timeOfDay = taskData.frequency ? getTimeOfDayFromFrequency(taskData.frequency) : 'Flexible';
         tasks.push({
           id: `${production.id}-germ-${idx}`,
           productionId: production.id,
           variety: production.variety,
           task: taskData.name,
           duration: taskData.duration || '15 min',
-          time: taskData.moment || '2x/jour',
+          time: timeOfDay,
           projectName: production.projectName,
           phase: 'germination'
         });
@@ -434,7 +435,7 @@ export const getDailyTasks = (date) => {
         variety: production.variety,
         task: 'Maintenir dans le noir',
         duration: '10 min',
-        time: 'Matin',
+        time: 'Midi',
         projectName: production.projectName,
         phase: 'obscurité'
       });
@@ -444,13 +445,14 @@ export const getDailyTasks = (date) => {
     if (daysSinceStart > methodData.germinationDuration) {
       methodData.tasks.forEach((task, idx) => {
         const taskData = typeof task === 'string' ? { name: task } : task;
+        const timeOfDay = taskData.frequency ? getTimeOfDayFromFrequency(taskData.frequency) : 'Flexible';
         tasks.push({
           id: `${production.id}-growth-${idx}`,
           productionId: production.id,
           variety: production.variety,
           task: taskData.name,
           duration: taskData.duration || '20 min',
-          time: taskData.moment || '1-2x/jour',
+          time: timeOfDay,
           projectName: production.projectName,
           phase: 'croissance'
         });
