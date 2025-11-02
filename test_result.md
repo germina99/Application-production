@@ -187,11 +187,14 @@ frontend:
     file: "src/components/GanttView.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
       - working: true
         agent: "main"
         comment: "Fixed date scale alignment issues. Updated date calculations to use Math.round instead of Math.floor/ceil for consistent positioning. Normalized all dates to midnight (00:00:00). Updated mock data with current November 2025 dates. Bars and vertical lines now align correctly with the date grid."
+      - working: true
+        agent: "testing"
+        comment: "COMPREHENSIVE TESTING COMPLETED ✅ All critical date alignment features verified: 1) Date sequence correct (31 oct, 1 nov, 2 nov, 3 nov...), 2) Production bars align perfectly - Brocoli starts exactly under '1 nov', Radis under '3 nov', 3) Today blue line appears precisely on '2 nov', 4) Project red lines appear on correct dates (9 nov, 10 nov), 5) All horizon controls working (1 semaine, 2 semaines, 1 mois), 6) Phase colors correct (blue=trempage, green=germination, yellow=croissance), 7) Dark overlays visible in germination phases, 8) Legend fully displayed and accurate. Date alignment issue completely resolved."
 
   - task: "Daily Tasks View"
     implemented: true
