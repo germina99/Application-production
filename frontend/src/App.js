@@ -33,10 +33,10 @@ const LoginPage = ({ onLogin }) => {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center space-y-4 pb-8">
-          <div className="mx-auto bg-green-600 w-16 h-16 rounded-full flex items-center justify-center">
-            <Sprout className="w-10 h-10 text-white" />
+          <div className="mx-auto w-20 h-20 rounded-full flex items-center justify-center overflow-hidden bg-white">
+            <img src="/logo-germina.png" alt="Germina" className="w-16 h-16 object-contain" />
           </div>
-          <CardTitle className="text-3xl font-bold text-green-800">Germina</CardTitle>
+          <CardTitle className="text-3xl font-bold" style={{ color: '#48bf20' }}>Germina</CardTitle>
           <p className="text-gray-600">Suivi de production - Micro-pousses & Germination</p>
         </CardHeader>
         <CardContent>
@@ -64,7 +64,7 @@ const LoginPage = ({ onLogin }) => {
               />
             </div>
             {error && <p className="text-red-500 text-sm">{error}</p>}
-            <Button type="submit" className="w-full bg-green-600 hover:bg-green-700">
+            <Button type="submit" className="w-full" style={{ backgroundColor: '#48bf20' }}>
               Se connecter
             </Button>
             <p className="text-xs text-center text-gray-500 mt-4">
