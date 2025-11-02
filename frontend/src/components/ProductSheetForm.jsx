@@ -75,7 +75,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
     
     const newTask = {
       name: taskName.trim(),
-      moment: taskMoment,
+      when: taskWhen,
       frequency: taskFrequency,
       duration: taskDuration
     };
@@ -90,7 +90,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
     
     // Reset task inputs
     setTaskName('');
-    setTaskMoment('Matin');
+    setTaskWhen('Début');
     setTaskFrequency('1x/jour');
     setTaskDuration('10 min');
   };
