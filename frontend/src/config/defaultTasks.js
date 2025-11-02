@@ -4,24 +4,32 @@
  * Structure de chaque tâche:
  * {
  *   name: "Nom de la tâche",
- *   moment: "Matin" | "Midi" | "Soir" | "Matin et soir" | "Midi et soir" | "Flexible",
+ *   when: "Début" | "Jour 1" | "Jour 2" | ... | "Trempage" | "Germination" | "Obscurité" | "Croissance" | "Fin",
  *   frequency: "1x" | "1x/jour" | "2x/jour" | "3x/jour" | "1x/semaine" | "2x/semaine",
- *   duration: "Durée estimée (ex: 10 min, 15 min, 30 min, 1h)"
+ *   duration: "5 min" | "10 min" | "15 min" | "30 min" | "45 min" | "1h"
  * }
+ * 
+ * La fréquence définit automatiquement les moments de la journée:
+ * - 1x → Midi
+ * - 1x/jour → Midi
+ * - 2x/jour → Matin et soir
+ * - 3x/jour → Matin, midi et soir
+ * - 1x/semaine → Matin
+ * - 2x/semaine → Matin et soir
  */
 
 export const DEFAULT_TASKS_CONFIG = {
   // Germination en pot
   "germination_en_pot": [
     {
-      name: "Rinçage 2x/jour",
-      moment: "Matin et soir",
+      name: "Rinçage",
+      when: "Germination",
       frequency: "2x/jour",
       duration: "10 min"
     },
     {
       name: "Vérifier humidité",
-      moment: "Matin",
+      when: "Germination",
       frequency: "1x/jour",
       duration: "5 min"
     }
@@ -31,19 +39,19 @@ export const DEFAULT_TASKS_CONFIG = {
   "germination_sur_plateau": [
     {
       name: "Brumisation",
-      moment: "Matin et soir",
+      when: "Germination",
       frequency: "2x/jour",
       duration: "10 min"
     },
     {
       name: "Vérifier humidité",
-      moment: "Matin",
+      when: "Germination",
       frequency: "1x/jour",
       duration: "5 min"
     },
     {
       name: "Rotation des plateaux",
-      moment: "Midi",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "5 min"
     }
@@ -52,20 +60,20 @@ export const DEFAULT_TASKS_CONFIG = {
   // Micro-pousse sur terreau
   "micro_pousse_sur_terreau": [
     {
-      name: "Arrosage quotidien",
-      moment: "Matin",
+      name: "Arrosage",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "15 min"
     },
     {
       name: "Rotation des plateaux",
-      moment: "Midi",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "10 min"
     },
     {
       name: "Vérifier moisissure",
-      moment: "Soir",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "10 min"
     }
@@ -75,19 +83,19 @@ export const DEFAULT_TASKS_CONFIG = {
   "micro_pousse_hydroponique": [
     {
       name: "Vérifier pH eau",
-      moment: "Matin",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "15 min"
     },
     {
       name: "Nettoyer système",
-      moment: "Matin",
+      when: "Début",
       frequency: "1x/semaine",
       duration: "30 min"
     },
     {
       name: "Contrôler température",
-      moment: "Matin et soir",
+      when: "Croissance",
       frequency: "2x/jour",
       duration: "5 min"
     }
@@ -97,13 +105,13 @@ export const DEFAULT_TASKS_CONFIG = {
   "micro_pousse_sur_tapis_de_chanvre": [
     {
       name: "Arrosage par vaporisation",
-      moment: "Matin et soir",
+      when: "Croissance",
       frequency: "2x/jour",
       duration: "10 min"
     },
     {
       name: "Maintenir humidité tapis",
-      moment: "Midi",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "5 min"
     }
@@ -113,17 +121,32 @@ export const DEFAULT_TASKS_CONFIG = {
   "default": [
     {
       name: "Arrosage",
-      moment: "Matin",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "10 min"
     },
     {
       name: "Surveillance",
-      moment: "Matin",
+      when: "Croissance",
       frequency: "1x/jour",
       duration: "5 min"
     }
   ]
+};
+
+/**
+ * Mapper la fréquence vers les moments de la journée
+ */
+export const getTimeOfDayFromFrequency = (frequency) => {
+  const mapping = {
+    "1x": "Midi",
+    "1x/jour": "Midi",
+    "2x/jour": "Matin et soir",
+    "3x/jour": "Matin, midi et soir",
+    "1x/semaine": "Matin",
+    "2x/semaine": "Matin et soir"
+  };
+  return mapping[frequency] || "Flexible";
 };
 
 /**
