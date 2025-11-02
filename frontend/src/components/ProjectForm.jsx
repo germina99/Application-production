@@ -216,10 +216,10 @@ const ProjectForm = ({ onProjectCreated }) => {
       <CardHeader className="bg-gradient-to-r from-blue-50 to-cyan-50 border-b">
         <CardTitle className="flex items-center gap-2 text-2xl text-blue-800">
           <Camera className="w-7 h-7" />
-          Nouveau Projet de Contenu
+          Nouveau projet de culture
         </CardTitle>
         <p className="text-sm text-gray-600 mt-2">
-          Planifiez vos productions pour créer du contenu visuel
+          Planifiez vos productions pour réussir vos projets
         </p>
       </CardHeader>
       <CardContent className="p-6">
