@@ -46,8 +46,10 @@ const GanttView = ({ refresh }) => {
         new Date(p.endDate)
       ]);
       
-      earliestDate = new Date(Math.min(today, ...dates));
-      latestDate = new Date(Math.max(today, ...dates));
+      dates.forEach(d => d.setHours(0, 0, 0, 0));
+      
+      earliestDate = new Date(Math.min(today.getTime(), ...dates.map(d => d.getTime())));
+      latestDate = new Date(Math.max(today.getTime(), ...dates.map(d => d.getTime())));
     }
     
     // S'assurer que l'horizon couvre au moins la période demandée
@@ -62,23 +64,35 @@ const GanttView = ({ refresh }) => {
     earliestDate.setDate(earliestDate.getDate() - 1);
     latestDate.setDate(latestDate.getDate() + 1);
     
+    // Normaliser les dates
+    earliestDate.setHours(0, 0, 0, 0);
+    latestDate.setHours(0, 0, 0, 0);
+    
     return { start: earliestDate, end: latestDate };
   };
 
   const { start: rangeStart, end: rangeEnd } = getDateRange();
-  const daysDiff = Math.ceil((rangeEnd - rangeStart) / (1000 * 60 * 60 * 24)) + 1;
+  
+  // Calculer le nombre exact de jours
+  const daysDiff = Math.round((rangeEnd - rangeStart) / (1000 * 60 * 60 * 24));
+  
   const days = Array.from({ length: daysDiff }, (_, i) => {
     const date = new Date(rangeStart);
     date.setDate(date.getDate() + i);
+    date.setHours(0, 0, 0, 0);
     return date;
   });
 
   const getBarPosition = (startDate, endDate) => {
     const start = new Date(startDate);
+    start.setHours(0, 0, 0, 0);
     const end = new Date(endDate);
+    end.setHours(0, 0, 0, 0);
     
-    const startOffset = Math.floor((start - rangeStart) / (1000 * 60 * 60 * 24));
-    const duration = Math.ceil((end - start) / (1000 * 60 * 60 * 24)) + 1;
+    // Calculer l'offset en jours depuis le début de la plage
+    const startOffset = Math.round((start - rangeStart) / (1000 * 60 * 60 * 24));
+    const endOffset = Math.round((end - rangeStart) / (1000 * 60 * 60 * 24));
+    const duration = endOffset - startOffset;
     
     return {
       left: `${(startOffset / daysDiff) * 100}%`,
