@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Button } from './ui/button';
+import { Input } from './ui/input';
 import { Badge } from './ui/badge';
-import { Leaf, Trash2, Clock, Edit2 } from 'lucide-react';
+import { Leaf, Trash2, Edit2, Search } from 'lucide-react';
 import { getProductSheets, deleteProductSheet, getTimeOfDayFromFrequency } from '../mock';
 import { toast } from '../hooks/use-toast';
 import ProductSheetForm from './ProductSheetForm';
@@ -10,6 +11,7 @@ import ProductSheetForm from './ProductSheetForm';
 const ProductSheetList = ({ refresh }) => {
   const [sheets, setSheets] = useState([]);
   const [editingSheet, setEditingSheet] = useState(null);
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     loadSheets();
@@ -42,6 +44,12 @@ const ProductSheetList = ({ refresh }) => {
     loadSheets();
   };
 
+  // Filtrer les fiches selon la recherche
+  const filteredSheets = sheets.filter(sheet => 
+    sheet.variety.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    sheet.description?.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
   if (editingSheet) {
     return (
       <div className="space-y-4">
@@ -63,10 +71,23 @@ const ProductSheetList = ({ refresh }) => {
 
   return (
     <div className="space-y-4">
-      <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
-        <Leaf className="w-6 h-6 text-green-600" />
-        Fiches Produits ({sheets.length})
-      </h2>
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-bold text-gray-800 flex items-center gap-2">
+          <Leaf className="w-6 h-6 text-green-600" />
+          Fiches Produits ({filteredSheets.length})
+        </h2>
+      </div>
+
+      {/* Barre de recherche */}
+      <div className="relative">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" />
+        <Input
+          placeholder="Rechercher une variété..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="pl-10 text-base"
+        />
+      </div>
       
       {sheets.length === 0 ? (
         <Card>
@@ -76,9 +97,16 @@ const ProductSheetList = ({ refresh }) => {
             <p className="text-sm mt-2">Créez votre première fiche pour définir vos variétés</p>
           </CardContent>
         </Card>
+      ) : filteredSheets.length === 0 ? (
+        <Card>
+          <CardContent className="p-12 text-center text-gray-500">
+            <Search className="w-16 h-16 mx-auto mb-4 opacity-30" />
+            <p>Aucune variété ne correspond à "{searchQuery}"</p>
+          </CardContent>
+        </Card>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {sheets.map(sheet => (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {filteredSheets.map(sheet => (
             <Card key={sheet.id} className="hover:shadow-lg transition-shadow">
               <CardHeader className="pb-3">
                 <div className="flex items-start justify-between">
@@ -106,62 +134,25 @@ const ProductSheetList = ({ refresh }) => {
                   </div>
                 </div>
               </CardHeader>
-              <CardContent className="space-y-3">
-                <div className="flex items-center gap-2 text-sm text-gray-600">
-                  <Clock className="w-4 h-4" />
-                  <span>{Object.keys(sheet.methods).length} méthode(s) configurée(s)</span>
-                </div>
-                <div className="space-y-2">
-                  {Object.entries(sheet.methods).map(([methodName, methodData]) => {
-                    const totalDays = 
-                      Math.ceil(methodData.soakDuration / 24) +
-                      methodData.germinationDuration +
-                      methodData.darkDuration +
-                      methodData.growthDuration;
-                    
-                    return (
-                      <div key={methodName} className="bg-green-50 p-3 rounded border border-green-200">
-                        <div className="flex items-center justify-between mb-2">
-                          <span className="text-sm font-medium text-green-800">{methodName}</span>
-                          <Badge variant="secondary" className="text-xs">
-                            ~{totalDays} jours
-                          </Badge>
-                        </div>
-                        <div className="grid grid-cols-4 gap-2 text-xs text-gray-600">
-                          <div>
-                            <span className="text-gray-500">Trempage:</span>
-                            <div className="font-medium">{methodData.soakDuration}h</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Germ:</span>
-                            <div className="font-medium">{methodData.germinationDuration}j</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Noir:</span>
-                            <div className="font-medium">{methodData.darkDuration}j</div>
-                          </div>
-                          <div>
-                            <span className="text-gray-500">Croiss:</span>
-                            <div className="font-medium">{methodData.growthDuration}j</div>
-                          </div>
-                        </div>
-                        {methodData.tasks.length > 0 && (
-                          <div className="mt-2 space-y-1">
-                            <span className="text-gray-500 text-xs">Tâches:</span>
-                            {methodData.tasks.map((task, tidx) => {
-                              const timeOfDay = task.frequency ? getTimeOfDayFromFrequency(task.frequency) : '';
-                              return (
-                                <div key={tidx} className="text-xs text-gray-600 pl-2">
-                                  • {task.name || task} {task.when && `(${task.when}, ${task.frequency} - ${timeOfDay})`}
-                                </div>
-                              );
-                            })}
-                          </div>
-                        )}
+              <CardContent className="space-y-2">
+                {Object.entries(sheet.methods).map(([methodName, methodData]) => {
+                  const totalDays = 
+                    Math.ceil(methodData.soakDuration / 24) +
+                    methodData.germinationDuration +
+                    methodData.darkDuration +
+                    methodData.growthDuration;
+                  
+                  return (
+                    <div key={methodName} className="bg-green-50 p-2 rounded border border-green-200">
+                      <div className="flex items-center justify-between">
+                        <span className="text-sm font-medium text-gray-800">{methodName}</span>
+                        <Badge variant="secondary" className="text-xs">
+                          ~{totalDays} jours
+                        </Badge>
                       </div>
-                    );
-                  })}
-                </div>
+                    </div>
+                  );
+                })}
               </CardContent>
             </Card>
           ))}
