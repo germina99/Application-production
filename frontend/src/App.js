@@ -33,8 +33,8 @@ const LoginPage = ({ onLogin }) => {
     <div className="min-h-screen bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 flex items-center justify-center p-4">
       <Card className="w-full max-w-md shadow-xl">
         <CardHeader className="text-center space-y-4 pb-8">
-          <div className="mx-auto w-20 h-20 rounded-full flex items-center justify-center overflow-hidden bg-white">
-            <img src="/logo-germina.png" alt="Germina" className="w-16 h-16 object-contain" />
+          <div className="mx-auto w-32 h-32 rounded-full flex items-center justify-center overflow-hidden bg-white">
+            <img src="/logo-germina.png" alt="Germina" className="w-28 h-28 object-contain" />
           </div>
           <CardTitle className="text-3xl font-bold" style={{ color: '#48bf20' }}>Germina</CardTitle>
           <p className="text-gray-600">Suivi de production - Micro-pousses & Germination</p>
