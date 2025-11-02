@@ -238,8 +238,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Verify Gantt legend display"
-    - "Test all existing features"
+    - "Gantt Chart Date Alignment"
+    - "Verify all Gantt features work correctly"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -247,3 +247,5 @@ test_plan:
 agent_communication:
   - agent: "main"
     message: "Initial assessment complete. Gantt legend already implemented and working. All frontend features functional with mock data. Ready for additional feature requests from user."
+  - agent: "main"
+    message: "Fixed Gantt date alignment issue. Problem was: 1) Mock data had July 2025 dates (outdated), 2) Date calculations used inconsistent Math.floor/ceil causing misalignment. Solution: Updated mock data to November 2025, normalized all date calculations with Math.round and setHours(0,0,0,0). Alignment now correct. Ready for testing."
