@@ -207,10 +207,40 @@ const GanttView = ({ refresh }) => {
     <div className="space-y-6">
       <Card>
         <CardHeader className="border-b bg-gradient-to-r from-germina-light to-germina-light">
-          <CardTitle className="flex items-center gap-2 text-germina">
-            <CalendarDays className="w-6 h-6" />
-            Diagramme de Gantt - Projets de Contenu
-          </CardTitle>
+          <div className="flex items-center justify-between">
+            <div>
+              <CardTitle className="flex items-center gap-2 text-germina">
+                <CalendarDays className="w-6 h-6" />
+                Diagramme de Gantt - Projets de Contenu
+              </CardTitle>
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant={horizon === 7 ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setHorizon(7)}
+                className={horizon === 7 ? 'bg-germina' : ''}
+              >
+                1 semaine
+              </Button>
+              <Button
+                variant={horizon === 14 ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setHorizon(14)}
+                className={horizon === 14 ? 'bg-germina' : ''}
+              >
+                2 semaines
+              </Button>
+              <Button
+                variant={horizon === 30 ? 'default' : 'outline'}
+                size="sm"
+                onClick={() => setHorizon(30)}
+                className={horizon === 30 ? 'bg-germina' : ''}
+              >
+                1 mois
+              </Button>
+            </div>
+          </div>
         </CardHeader>
         <CardContent className="p-6">
           {projects.length === 0 ? (
