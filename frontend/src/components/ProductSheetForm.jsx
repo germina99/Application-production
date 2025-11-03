@@ -360,6 +360,8 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                               <option value="Germination">Germination</option>
                               <option value="Obscurité">Obscurité</option>
                               <option value="Croissance">Croissance</option>
+                              <option value="-2 jours avant la fin">-2 jours avant la fin</option>
+                              <option value="-1 jour avant la fin">-1 jour avant la fin</option>
                               <option value="Fin">Fin</option>
                             </select>
                           </div>
