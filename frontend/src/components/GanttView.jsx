@@ -364,41 +364,33 @@ const GanttView = ({ refresh }) => {
                 const isNearDeadline = isProjectDateNear(project.projectDate);
                 
                 return (
-                  <div key={project.id} className="space-y-3">
-                    <div className="flex items-center justify-between bg-gradient-to-r from-blue-50 to-cyan-50 p-3 rounded-lg border border-blue-200">
-                      <div className="flex-1">
-                        <div className="flex items-center gap-3">
-                          <h3 className="font-semibold text-lg text-blue-800">{project.projectName}</h3>
-                          <Badge variant="outline" className="gap-1">
-                            {getProjectTypeIcon(project.projectType)}
-                            {project.projectType}
+                  <div key={project.id} className="space-y-2">
+                    <div className="flex items-center justify-between bg-gradient-to-r from-blue-50 to-cyan-50 px-3 py-1.5 rounded border border-blue-200">
+                      <div className="flex items-center gap-3 flex-1 min-w-0">
+                        <h3 className="font-semibold text-sm text-blue-800 truncate">{project.projectName}</h3>
+                        <Badge variant="outline" className="gap-1 text-xs py-0 h-5 flex-shrink-0">
+                          {getProjectTypeIcon(project.projectType)}
+                          {project.projectType}
+                        </Badge>
+                        <span className="text-xs text-gray-600 flex-shrink-0">
+                          {new Date(project.projectDate).toLocaleDateString('fr-FR', {
+                            day: 'numeric',
+                            month: 'short'
+                          })}
+                        </span>
+                        {isNearDeadline && (
+                          <Badge variant="destructive" className="animate-pulse text-xs py-0 h-5 flex-shrink-0">
+                            <AlertCircle className="w-3 h-3 mr-1" />
+                            Bientôt!
                           </Badge>
-                          {isNearDeadline && (
-                            <Badge variant="destructive" className="animate-pulse">
-                              <AlertCircle className="w-3 h-3 mr-1" />
-                              Bientôt!
-                            </Badge>
-                          )}
-                        </div>
-                        {project.projectDescription && (
-                          <p className="text-sm text-gray-600 mt-1">{project.projectDescription}</p>
                         )}
-                        <div className="flex items-center gap-4 mt-1 text-sm text-gray-600">
-                          <span>
-                            <strong>Date:</strong>{' '}
-                            {new Date(project.projectDate).toLocaleDateString('fr-FR', {
-                              day: 'numeric',
-                              month: 'long'
-                            })}
-                          </span>
-                        </div>
                       </div>
-                      <div className="flex gap-2">
-                        <Button variant="ghost" size="sm" onClick={() => handleEditProject(project)}>
-                          <Pencil className="w-4 h-4 text-blue-600" />
+                      <div className="flex gap-1 flex-shrink-0">
+                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => handleEditProject(project)}>
+                          <Pencil className="w-3.5 h-3.5 text-blue-600" />
                         </Button>
-                        <Button variant="ghost" size="sm" onClick={() => handleDeleteProject(project.id, project.projectName)}>
-                          <Trash2 className="w-4 h-4 text-red-500" />
+                        <Button variant="ghost" size="sm" className="h-7 w-7 p-0" onClick={() => handleDeleteProject(project.id, project.projectName)}>
+                          <Trash2 className="w-3.5 h-3.5 text-red-500" />
                         </Button>
                       </div>
                     </div>
