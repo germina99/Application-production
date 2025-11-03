@@ -83,20 +83,28 @@ const GanttView = ({ refresh }) => {
     return date;
   });
 
-  const getBarPosition = (startDate, endDate) => {
+  const getBarPosition = (startDate, endDate, production) => {
     const start = new Date(startDate);
-    start.setHours(0, 0, 0, 0);
+    start.setHours(10, 0, 0, 0); // Trempage commence à 10:00
+    
     const end = new Date(endDate);
     end.setHours(0, 0, 0, 0);
     
-    // Calculer l'offset en jours depuis le début de la plage
-    const startOffset = Math.round((start - rangeStart) / (1000 * 60 * 60 * 24));
-    const endOffset = Math.round((end - rangeStart) / (1000 * 60 * 60 * 24));
-    const duration = endOffset - startOffset;
+    const rangeStartNormalized = new Date(rangeStart);
+    rangeStartNormalized.setHours(0, 0, 0, 0);
+    
+    // Calculer l'offset en heures depuis le début de la plage, puis convertir en jours
+    const startOffsetHours = (start - rangeStartNormalized) / (1000 * 60 * 60);
+    const startOffsetDays = startOffsetHours / 24;
+    
+    const endOffsetHours = (end - rangeStartNormalized) / (1000 * 60 * 60);
+    const endOffsetDays = endOffsetHours / 24;
+    
+    const durationDays = endOffsetDays - startOffsetDays;
     
     return {
-      left: `${(startOffset / daysDiff) * 100}%`,
-      width: `${(duration / daysDiff) * 100}%`
+      left: `${(startOffsetDays / daysDiff) * 100}%`,
+      width: `${(durationDays / daysDiff) * 100}%`
     };
   };
 
