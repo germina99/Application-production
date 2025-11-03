@@ -129,12 +129,12 @@ export const mockProductSheets = [
     variety: 'Tournesol',
     description: 'Riche en protéines, saveur de noisette',
     methods: {
-      'Micro-pousse hydroponique': {
+      'Micro-pousse coupelle mucilage': {
         soakDuration: 12,
         germinationDuration: 2,
         darkDuration: 2,
         growthDuration: 8,
-        specialEquipment: 'Système hydroponique',
+        specialEquipment: 'Coupelles mucilage',
         tasks: [
           { name: 'Vérifier pH eau', when: 'Croissance', frequency: '1x/jour', duration: '15 min' },
           { name: 'Nettoyer système', when: 'Début', frequency: '1x/semaine', duration: '30 min' },
