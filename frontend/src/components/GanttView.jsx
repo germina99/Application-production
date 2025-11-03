@@ -338,14 +338,20 @@ const GanttView = ({ refresh }) => {
               {/* Timeline header */}
               <div className="flex border-b pb-2">
                 <div className="w-80 flex-shrink-0" />
-                <div className="flex-1 flex overflow-x-auto">
+                <div className="flex-1 flex relative">
                   {days.map((day, idx) => {
                     const isToday = day.toDateString() === new Date().toDateString();
+                    const leftPosition = (idx / daysDiff) * 100;
+                    const width = (1 / daysDiff) * 100;
+                    
                     return (
                       <div
                         key={idx}
-                        className={`flex-1 text-center text-xs border-l px-1 ${isToday ? 'bg-blue-100' : ''}`}
-                        style={{ minWidth: '60px' }}
+                        className={`absolute text-center text-xs border-l px-1 ${isToday ? 'bg-blue-100' : ''}`}
+                        style={{ 
+                          left: `${leftPosition}%`,
+                          width: `${width}%`
+                        }}
                       >
                         <div className={`font-semibold ${isToday ? 'text-blue-700' : 'text-germina'}`}>
                           {day.toLocaleDateString('fr-FR', { weekday: 'short' })}
