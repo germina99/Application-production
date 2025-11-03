@@ -6,7 +6,7 @@
  *   name: "Nom de la tâche",
  *   when: "Début" | "Jour 1" | "Jour 2" | ... | "Trempage" | "Germination" | "Obscurité" | "Croissance" | "Fin",
  *   frequency: "1x" | "1x/jour" | "2x/jour" | "3x/jour" | "1x/semaine" | "2x/semaine",
- *   duration: "5 min" | "10 min" | "15 min" | "30 min" | "45 min" | "1h"
+ *   end: "Jour 1" | "Jour 2" | ... | "Trempage" | "Germination" | "Obscurité" | "Croissance" | "Fin"
  * }
  * 
  * La fréquence définit automatiquement les moments de la journée:
@@ -25,13 +25,13 @@ export const DEFAULT_TASKS_CONFIG = {
       name: "Rinçage",
       when: "Germination",
       frequency: "2x/jour",
-      duration: "10 min"
+      end: "Fin"
     },
     {
       name: "Vérifier humidité",
       when: "Germination",
       frequency: "1x/jour",
-      duration: "5 min"
+      end: "Fin"
     }
   ],
 
@@ -41,19 +41,19 @@ export const DEFAULT_TASKS_CONFIG = {
       name: "Brumisation",
       when: "Germination",
       frequency: "2x/jour",
-      duration: "10 min"
+      end: "Croissance"
     },
     {
       name: "Vérifier humidité",
       when: "Germination",
       frequency: "1x/jour",
-      duration: "5 min"
+      end: "Croissance"
     },
     {
       name: "Rotation des plateaux",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "5 min"
+      end: "Fin"
     }
   ],
 
@@ -63,19 +63,19 @@ export const DEFAULT_TASKS_CONFIG = {
       name: "Arrosage",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "15 min"
+      end: "Fin"
     },
     {
       name: "Rotation des plateaux",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "10 min"
+      end: "Fin"
     },
     {
       name: "Vérifier moisissure",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "10 min"
+      end: "Fin"
     }
   ],
 
@@ -85,19 +85,19 @@ export const DEFAULT_TASKS_CONFIG = {
       name: "Vérifier pH eau",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "15 min"
+      end: "Fin"
     },
     {
       name: "Nettoyer système",
       when: "Début",
       frequency: "1x/semaine",
-      duration: "30 min"
+      end: "Fin"
     },
     {
       name: "Contrôler température",
       when: "Croissance",
       frequency: "2x/jour",
-      duration: "5 min"
+      end: "Fin"
     }
   ],
 
@@ -107,13 +107,13 @@ export const DEFAULT_TASKS_CONFIG = {
       name: "Arrosage par vaporisation",
       when: "Croissance",
       frequency: "2x/jour",
-      duration: "10 min"
+      end: "Fin"
     },
     {
       name: "Maintenir humidité tapis",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "5 min"
+      end: "Fin"
     }
   ],
 
@@ -123,13 +123,13 @@ export const DEFAULT_TASKS_CONFIG = {
       name: "Arrosage",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "10 min"
+      end: "Fin"
     },
     {
       name: "Surveillance",
       when: "Croissance",
       frequency: "1x/jour",
-      duration: "5 min"
+      end: "Fin"
     }
   ]
 };
