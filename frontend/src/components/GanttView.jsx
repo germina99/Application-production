@@ -103,7 +103,11 @@ const GanttView = ({ refresh }) => {
   // Get phase segments with darkness overlay
   const getPhaseSegments = (production) => {
     const methodData = production.methodData;
-    const soakDays = Math.ceil(methodData.soakDuration / 24);
+    
+    // Trempage en heures (commence à 10:00, représenté comme fraction de jour)
+    const soakHours = methodData.soakDuration;
+    const soakDays = soakHours / 24; // Représentation exacte en jours
+    
     const germinationDays = methodData.germinationDuration;
     const darkDays = methodData.darkDuration;
     const growthDays = methodData.growthDuration;
@@ -111,12 +115,13 @@ const GanttView = ({ refresh }) => {
     
     const segments = [];
     
-    // Trempage
+    // Trempage - représenté proportionnellement aux heures
     segments.push({
       name: 'Trempage',
       color: 'bg-blue-400',
       width: (soakDays / totalDays) * 100,
       days: soakDays,
+      hours: soakHours,
       darkOverlay: false
     });
     
