@@ -48,6 +48,45 @@ const GanttView = ({ refresh }) => {
     }
   };
 
+  const handleEditProject = (project) => {
+    setEditingProject(project);
+    setEditForm({
+      projectName: project.projectName,
+      projectDescription: project.projectDescription || '',
+      projectDate: project.projectDate ? new Date(project.projectDate) : null,
+      projectType: project.projectType
+    });
+    setEditDialogOpen(true);
+  };
+
+  const handleSaveEdit = () => {
+    if (!editForm.projectName || !editForm.projectDate) {
+      toast({
+        title: "Erreur",
+        description: "Le nom et la date du projet sont requis",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    const updatedProject = {
+      ...editingProject,
+      projectName: editForm.projectName,
+      projectDescription: editForm.projectDescription,
+      projectDate: format(editForm.projectDate, 'yyyy-MM-dd'),
+      projectType: editForm.projectType
+    };
+
+    updateProject(editingProject.id, updatedProject);
+    loadData();
+    setEditDialogOpen(false);
+    setEditingProject(null);
+    toast({
+      title: "Projet modifié",
+      description: `Le projet ${editForm.projectName} a été modifié avec succès.`
+    });
+  };
+
   const allProductions = getAllProductions();
 
   const getDateRange = () => {
