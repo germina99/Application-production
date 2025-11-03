@@ -4,7 +4,7 @@ export const productionMethods = [
   'Germination en pot',
   'Germination sur plateau',
   'Micro-pousse sur terreau',
-  'Micro-pousse hydroponique',
+  'Micro-pousse coupelle mucilage',
   'Micro-pousse sur tapis de chanvre'
 ];
 
