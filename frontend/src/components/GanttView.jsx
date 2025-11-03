@@ -543,6 +543,99 @@ const GanttView = ({ refresh }) => {
           )}
         </CardContent>
       </Card>
+
+      {/* Dialog d'édition de projet */}
+      <Dialog open={editDialogOpen} onOpenChange={setEditDialogOpen}>
+        <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
+          <DialogHeader>
+            <DialogTitle>Modifier le projet</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            {/* Nom du projet */}
+            <div className="space-y-2">
+              <Label htmlFor="edit-name">Nom du projet *</Label>
+              <Input
+                id="edit-name"
+                value={editForm.projectName}
+                onChange={(e) => setEditForm({ ...editForm, projectName: e.target.value })}
+                placeholder="Ex: Contenu Instagram - Semaine 1"
+              />
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <Label htmlFor="edit-description">Description</Label>
+              <Textarea
+                id="edit-description"
+                value={editForm.projectDescription}
+                onChange={(e) => setEditForm({ ...editForm, projectDescription: e.target.value })}
+                placeholder="Description du projet..."
+                rows={3}
+              />
+            </div>
+
+            {/* Type de projet */}
+            <div className="space-y-2">
+              <Label>Type de projet *</Label>
+              <Select value={editForm.projectType} onValueChange={(value) => setEditForm({ ...editForm, projectType: value })}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="photo">
+                    <div className="flex items-center gap-2">
+                      <ImageIcon className="w-4 h-4" />
+                      Photo
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="tournage">
+                    <div className="flex items-center gap-2">
+                      <Video className="w-4 h-4" />
+                      Tournage
+                    </div>
+                  </SelectItem>
+                  <SelectItem value="test">
+                    <div className="flex items-center gap-2">
+                      <FlaskConical className="w-4 h-4" />
+                      Test
+                    </div>
+                  </SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {/* Date du projet */}
+            <div className="space-y-2">
+              <Label>Date du projet/événement *</Label>
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Button variant="outline" className="w-full justify-start text-left font-normal">
+                    <CalendarIcon className="mr-2 h-4 w-4" />
+                    {editForm.projectDate ? format(editForm.projectDate, 'PPP', { locale: fr }) : 'Sélectionner une date'}
+                  </Button>
+                </PopoverTrigger>
+                <PopoverContent className="w-auto p-0">
+                  <Calendar
+                    mode="single"
+                    selected={editForm.projectDate}
+                    onSelect={(date) => setEditForm({ ...editForm, projectDate: date })}
+                    locale={fr}
+                  />
+                </PopoverContent>
+              </Popover>
+            </div>
+
+            <div className="flex justify-end gap-2 pt-4">
+              <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
+                Annuler
+              </Button>
+              <Button onClick={handleSaveEdit} className="bg-germina hover:bg-germina-dark">
+                Enregistrer
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
