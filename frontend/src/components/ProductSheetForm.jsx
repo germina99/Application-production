@@ -77,7 +77,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
       name: taskName.trim(),
       when: taskWhen,
       frequency: taskFrequency,
-      duration: taskDuration
+      end: taskEnd
     };
     
     setMethods(prev => ({
@@ -92,7 +92,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
     setTaskName('');
     setTaskWhen('Début');
     setTaskFrequency('1x/jour');
-    setTaskDuration('10 min');
+    setTaskEnd('Fin');
   };
 
   const removeTask = (method, taskIndex) => {
