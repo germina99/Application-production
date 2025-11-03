@@ -338,7 +338,7 @@ const GanttView = ({ refresh }) => {
               {/* Timeline header */}
               <div className="flex border-b pb-2">
                 <div className="w-80 flex-shrink-0" />
-                <div className="flex-1 flex relative">
+                <div className="flex-1 relative" style={{ minHeight: '40px' }}>
                   {days.map((day, idx) => {
                     const isToday = day.toDateString() === new Date().toDateString();
                     const leftPosition = (idx / daysDiff) * 100;
@@ -350,7 +350,8 @@ const GanttView = ({ refresh }) => {
                         className={`absolute text-center text-xs border-l px-1 ${isToday ? 'bg-blue-100' : ''}`}
                         style={{ 
                           left: `${leftPosition}%`,
-                          width: `${width}%`
+                          width: `${width}%`,
+                          height: '100%'
                         }}
                       >
                         <div className={`font-semibold ${isToday ? 'text-blue-700' : 'text-germina'}`}>
