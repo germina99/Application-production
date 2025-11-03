@@ -342,7 +342,7 @@ const GanttView = ({ refresh }) => {
                     </div>
 
                     {projectProductions.map((production) => {
-                      const barPos = getBarPosition(production.startDate, production.endDate);
+                      const barPos = getBarPosition(production.startDate, production.endDate, production);
                       const phaseSegments = getPhaseSegments(production);
                       const progressPercent = getProgressPosition(production.startDate, production.endDate);
                       
