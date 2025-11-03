@@ -196,6 +196,18 @@ frontend:
         agent: "testing"
         comment: "COMPREHENSIVE TESTING COMPLETED ✅ All critical date alignment features verified: 1) Date sequence correct (31 oct, 1 nov, 2 nov, 3 nov...), 2) Production bars align perfectly - Brocoli starts exactly under '1 nov', Radis under '3 nov', 3) Today blue line appears precisely on '2 nov', 4) Project red lines appear on correct dates (9 nov, 10 nov), 5) All horizon controls working (1 semaine, 2 semaines, 1 mois), 6) Phase colors correct (blue=trempage, green=germination, yellow=croissance), 7) Dark overlays visible in germination phases, 8) Legend fully displayed and accurate. Date alignment issue completely resolved."
 
+  - task: "Gantt Chart Soak Phase Hour-Based Representation"
+    implemented: true
+    working: true
+    file: "src/components/GanttView.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+      - working: true
+        agent: "testing"
+        comment: "SOAK PHASE HOUR-BASED TESTING COMPLETE ✅ All test objectives successfully verified: 1) Soak phases proportionally sized based on hours not days (3.57%-4.76% of total width), 2) All soak phases start at 10:00 AM as confirmed in tooltips, 3) Tooltips display correct hour format ('Trempage: 8h (débute à 10:00)' for 8h soak, 'Trempage: 6h (débute à 10:00)' for 6h soak), 4) Soak bars appropriately smaller than before (~1/3 of day for 8h, ~1/4 for 6h). Expected productions verified: Brocoli (Micro-pousse sur terreau) 8h soak, Radis (Micro-pousse sur terreau) 8h soak, Radis (Germination en pot) 6h soak. Hour-based representation working perfectly with correct proportional sizing and 10:00 AM start time implementation."
+
   - task: "Daily Tasks View"
     implemented: true
     working: true
