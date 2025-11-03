@@ -365,7 +365,7 @@ const GanttView = ({ refresh }) => {
                                   key={idx}
                                   className={`relative ${phase.color} flex items-center justify-center text-xs font-medium text-white border-r border-white/30 overflow-hidden`}
                                   style={{ width: `${phase.width}%` }}
-                                  title={`${phase.name}: ${phase.days}j${phase.darkOverlay ? ` (dont ${phase.darkDays}j noir)` : ''}`}
+                                  title={`${phase.name}: ${phase.hours ? `${phase.hours}h (débute à 10:00)` : `${phase.days}j`}${phase.darkOverlay ? ` (dont ${phase.darkDays}j noir)` : ''}`}
                                 >
                                   {phase.darkOverlay && (
                                     <div 
