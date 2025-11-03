@@ -393,9 +393,14 @@ const GanttView = ({ refresh }) => {
                           </span>
                         </div>
                       </div>
-                      <Button variant="ghost" size="sm" onClick={() => handleDeleteProject(project.id, project.projectName)}>
-                        <Trash2 className="w-4 h-4 text-red-500" />
-                      </Button>
+                      <div className="flex gap-2">
+                        <Button variant="ghost" size="sm" onClick={() => handleEditProject(project)}>
+                          <Pencil className="w-4 h-4 text-blue-600" />
+                        </Button>
+                        <Button variant="ghost" size="sm" onClick={() => handleDeleteProject(project.id, project.projectName)}>
+                          <Trash2 className="w-4 h-4 text-red-500" />
+                        </Button>
+                      </div>
                     </div>
 
                     {projectProductions.map((production) => {
