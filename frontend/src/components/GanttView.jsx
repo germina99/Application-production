@@ -2,13 +2,31 @@ import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
-import { CalendarDays, Trash2, AlertCircle, Video, Image as ImageIcon, FlaskConical } from 'lucide-react';
-import { getAllProductions, getProjects, deleteProject } from '../mock';
+import { CalendarDays, Trash2, AlertCircle, Video, Image as ImageIcon, FlaskConical, Pencil } from 'lucide-react';
+import { getAllProductions, getProjects, deleteProject, updateProject } from '../mock';
 import { toast } from '../hooks/use-toast';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
+import { Textarea } from './ui/textarea';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './ui/select';
+import { Calendar } from './ui/calendar';
+import { Popover, PopoverContent, PopoverTrigger } from './ui/popover';
+import { format } from 'date-fns';
+import { fr } from 'date-fns/locale';
+import { CalendarIcon } from 'lucide-react';
 
 const GanttView = ({ refresh }) => {
   const [projects, setProjects] = useState([]);
   const [horizon, setHorizon] = useState(14); // 2 semaines par défaut
+  const [editingProject, setEditingProject] = useState(null);
+  const [editDialogOpen, setEditDialogOpen] = useState(false);
+  const [editForm, setEditForm] = useState({
+    projectName: '',
+    projectDescription: '',
+    projectDate: null,
+    projectType: 'photo'
+  });
 
   useEffect(() => {
     loadData();
