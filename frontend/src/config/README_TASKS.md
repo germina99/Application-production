@@ -103,7 +103,7 @@ Simplement éditer les valeurs dans le fichier :
 1. ✅ **Germination en pot** (`germination_en_pot`)
 2. ✅ **Germination sur plateau** (`germination_sur_plateau`)
 3. ✅ **Micro-pousse sur terreau** (`micro_pousse_sur_terreau`)
-4. ✅ **Micro-pousse hydroponique** (`micro_pousse_hydroponique`)
+4. ✅ **Micro-pousse coupelle mucilage** (`micro_pousse_coupelle_mucilage`)
 5. ✅ **Micro-pousse sur tapis de chanvre** (`micro_pousse_sur_tapis_de_chanvre`)
 6. ✅ **Default** (tâches par défaut si aucune correspondance)
 
