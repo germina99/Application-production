@@ -338,16 +338,21 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                             <option value="2x/semaine">2x/semaine</option>
                           </select>
                           <select
-                            value={taskDuration}
-                            onChange={(e) => setTaskDuration(e.target.value)}
+                            value={taskEnd}
+                            onChange={(e) => setTaskEnd(e.target.value)}
                             className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
                           >
-                            <option value="5 min">5 min</option>
-                            <option value="10 min">10 min</option>
-                            <option value="15 min">15 min</option>
-                            <option value="30 min">30 min</option>
-                            <option value="45 min">45 min</option>
-                            <option value="1h">1h</option>
+                            <option value="Début">Début</option>
+                            <option value="Jour 1">Jour 1</option>
+                            <option value="Jour 2">Jour 2</option>
+                            <option value="Jour 3">Jour 3</option>
+                            <option value="Jour 5">Jour 5</option>
+                            <option value="Jour 7">Jour 7</option>
+                            <option value="Trempage">Trempage</option>
+                            <option value="Germination">Germination</option>
+                            <option value="Obscurité">Obscurité</option>
+                            <option value="Croissance">Croissance</option>
+                            <option value="Fin">Fin</option>
                           </select>
                           <Button
                             type="button"
@@ -368,9 +373,9 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                                 <div className="flex-1">
                                   <div className="font-medium text-sm">{task.name}</div>
                                   <div className="text-xs text-gray-600 mt-1 flex gap-3">
-                                    <span>📅 {task.when}</span>
+                                    <span>📅 Début: {task.when}</span>
                                     <span>🔄 {task.frequency} ({timeOfDay})</span>
-                                    <span>⏱️ {task.duration}</span>
+                                    <span>🏁 Fin: {task.end}</span>
                                   </div>
                                 </div>
                                 <Button
