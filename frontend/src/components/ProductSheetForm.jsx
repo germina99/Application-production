@@ -304,56 +304,65 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
                             value={taskName}
                             onChange={(e) => setTaskName(e.target.value)}
                           />
-                          <select
-                            value={taskWhen}
-                            onChange={(e) => setTaskWhen(e.target.value)}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                          >
-                            <option value="Début">Début</option>
-                            <option value="Jour 1">Jour 1</option>
-                            <option value="Jour 2">Jour 2</option>
-                            <option value="Jour 3">Jour 3</option>
-                            <option value="Jour 4">Jour 4</option>
-                            <option value="Jour 5">Jour 5</option>
-                            <option value="Jour 6">Jour 6</option>
-                            <option value="Jour 7">Jour 7</option>
-                            <option value="Trempage">Trempage</option>
-                            <option value="Germination">Germination</option>
-                            <option value="Obscurité">Obscurité</option>
-                            <option value="Croissance">Croissance</option>
-                            <option value="Fin">Fin</option>
-                          </select>
+                          <div>
+                            <Label className="text-xs text-gray-600 mb-1">Début</Label>
+                            <select
+                              value={taskWhen}
+                              onChange={(e) => setTaskWhen(e.target.value)}
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                            >
+                              <option value="Début">Début</option>
+                              <option value="Jour 1">Jour 1</option>
+                              <option value="Jour 2">Jour 2</option>
+                              <option value="Jour 3">Jour 3</option>
+                              <option value="Jour 4">Jour 4</option>
+                              <option value="Jour 5">Jour 5</option>
+                              <option value="Jour 6">Jour 6</option>
+                              <option value="Jour 7">Jour 7</option>
+                              <option value="Trempage">Trempage</option>
+                              <option value="Germination">Germination</option>
+                              <option value="Obscurité">Obscurité</option>
+                              <option value="Croissance">Croissance</option>
+                              <option value="Fin">Fin</option>
+                            </select>
+                          </div>
                         </div>
                         <div className="grid grid-cols-3 gap-2">
-                          <select
-                            value={taskFrequency}
-                            onChange={(e) => setTaskFrequency(e.target.value)}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                          >
-                            <option value="1x">1x (ponctuel)</option>
-                            <option value="1x/jour">1x/jour</option>
-                            <option value="2x/jour">2x/jour</option>
-                            <option value="3x/jour">3x/jour</option>
-                            <option value="1x/semaine">1x/semaine</option>
-                            <option value="2x/semaine">2x/semaine</option>
-                          </select>
-                          <select
-                            value={taskEnd}
-                            onChange={(e) => setTaskEnd(e.target.value)}
-                            className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
-                          >
-                            <option value="Début">Début</option>
-                            <option value="Jour 1">Jour 1</option>
-                            <option value="Jour 2">Jour 2</option>
-                            <option value="Jour 3">Jour 3</option>
-                            <option value="Jour 5">Jour 5</option>
-                            <option value="Jour 7">Jour 7</option>
-                            <option value="Trempage">Trempage</option>
-                            <option value="Germination">Germination</option>
-                            <option value="Obscurité">Obscurité</option>
-                            <option value="Croissance">Croissance</option>
-                            <option value="Fin">Fin</option>
-                          </select>
+                          <div>
+                            <Label className="text-xs text-gray-600 mb-1">Fréquence</Label>
+                            <select
+                              value={taskFrequency}
+                              onChange={(e) => setTaskFrequency(e.target.value)}
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                            >
+                              <option value="1x">1x (ponctuel)</option>
+                              <option value="1x/jour">1x/jour</option>
+                              <option value="2x/jour">2x/jour</option>
+                              <option value="3x/jour">3x/jour</option>
+                              <option value="1x/semaine">1x/semaine</option>
+                              <option value="2x/semaine">2x/semaine</option>
+                            </select>
+                          </div>
+                          <div>
+                            <Label className="text-xs text-gray-600 mb-1">Fin</Label>
+                            <select
+                              value={taskEnd}
+                              onChange={(e) => setTaskEnd(e.target.value)}
+                              className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm"
+                            >
+                              <option value="Début">Début</option>
+                              <option value="Jour 1">Jour 1</option>
+                              <option value="Jour 2">Jour 2</option>
+                              <option value="Jour 3">Jour 3</option>
+                              <option value="Jour 5">Jour 5</option>
+                              <option value="Jour 7">Jour 7</option>
+                              <option value="Trempage">Trempage</option>
+                              <option value="Germination">Germination</option>
+                              <option value="Obscurité">Obscurité</option>
+                              <option value="Croissance">Croissance</option>
+                              <option value="Fin">Fin</option>
+                            </select>
+                          </div>
                           <Button
                             type="button"
                             variant="outline"
