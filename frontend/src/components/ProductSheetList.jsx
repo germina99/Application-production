@@ -136,10 +136,11 @@ const ProductSheetList = ({ refresh }) => {
               </CardHeader>
               <CardContent className="space-y-2">
                 {Object.entries(sheet.methods).map(([methodName, methodData]) => {
+                  // Calcul correct : trempage + germination + croissance
+                  // L'obscurité se passe PENDANT la germination/croissance, pas en plus
                   const totalDays = 
                     Math.ceil(methodData.soakDuration / 24) +
                     methodData.germinationDuration +
-                    methodData.darkDuration +
                     methodData.growthDuration;
                   
                   return (
