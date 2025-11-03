@@ -182,8 +182,8 @@ export const getDefaultTasksByMethod = (method) => {
     return [...DEFAULT_TASKS_CONFIG.micro_pousse_sur_terreau];
   }
   
-  if (methodLower.includes('micro') && methodLower.includes('hydro')) {
-    return [...DEFAULT_TASKS_CONFIG.micro_pousse_hydroponique];
+  if (methodLower.includes('coupelle') && methodLower.includes('mucilage')) {
+    return [...DEFAULT_TASKS_CONFIG.micro_pousse_coupelle_mucilage];
   }
   
   if (methodLower.includes('micro') && methodLower.includes('chanvre')) {
