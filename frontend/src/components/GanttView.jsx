@@ -434,7 +434,7 @@ const GanttView = ({ refresh }) => {
                       
                       return (
                         <div key={production.id} className="flex items-center group hover:bg-gray-50 rounded p-1 transition-colors ml-4">
-                          <div className="w-64 flex-shrink-0 pr-3">
+                          <div className="w-80 flex-shrink-0 pr-3">
                             <div className="font-medium text-xs">{production.variety}</div>
                             <div className="text-xs text-gray-500">{production.method}</div>
                             <div className="flex items-center gap-2 mt-0.5">
