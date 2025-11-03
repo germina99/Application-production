@@ -399,7 +399,7 @@ const GanttView = ({ refresh }) => {
                     {/* Zone de productions avec grille de lignes */}
                     <div className="relative">
                       {/* Grille de lignes verticales - une seule fois pour tout le projet */}
-                      <div className="absolute inset-0 pointer-events-none" style={{ left: '17rem' }}>
+                      <div className="absolute inset-0 pointer-events-none" style={{ left: '16rem' }}>
                         {days.map((day, idx) => {
                           const isToday = day.toDateString() === new Date().toDateString();
                           const isProjectDate = day.toDateString() === new Date(project.projectDate).toDateString();
