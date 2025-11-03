@@ -150,12 +150,13 @@ const GanttView = ({ refresh }) => {
     const rangeStartNormalized = new Date(rangeStart);
     rangeStartNormalized.setHours(0, 0, 0, 0);
     
-    // Calculer l'offset en heures depuis le début de la plage, puis convertir en jours
-    const startOffsetHours = (start - rangeStartNormalized) / (1000 * 60 * 60);
-    const startOffsetDays = startOffsetHours / 24;
+    // Calculer l'offset en jours depuis le début de la plage
+    // On utilise le même système que pour afficher les colonnes de dates
+    const startOffsetMs = start - rangeStartNormalized;
+    const startOffsetDays = startOffsetMs / (1000 * 60 * 60 * 24);
     
-    const endOffsetHours = (end - rangeStartNormalized) / (1000 * 60 * 60);
-    const endOffsetDays = endOffsetHours / 24;
+    const endOffsetMs = end - rangeStartNormalized;
+    const endOffsetDays = endOffsetMs / (1000 * 60 * 60 * 24);
     
     const durationDays = endOffsetDays - startOffsetDays;
     
