@@ -79,8 +79,8 @@ export const DEFAULT_TASKS_CONFIG = {
     }
   ],
 
-  // Micro-pousse hydroponique
-  "micro_pousse_hydroponique": [
+  // Micro-pousse coupelle mucilage
+  "micro_pousse_coupelle_mucilage": [
     {
       name: "Vérifier pH eau",
       when: "Croissance",
