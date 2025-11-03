@@ -487,37 +487,11 @@ const GanttView = ({ refresh }) => {
                                 </div>
                               )}
                             </div>
-                            
-                            {/* Grid lines + lignes spéciales */}
-                            {days.map((day, idx) => {
-                              const isToday = day.toDateString() === new Date().toDateString();
-                              const isProjectDate = day.toDateString() === new Date(project.projectDate).toDateString();
-                              
-                              return (
-                                <div key={idx} className="absolute top-0 bottom-0" style={{ left: `${(idx / daysDiff) * 100}%` }}>
-                                  {/* Ligne normale */}
-                                  <div className={`w-px h-full ${isToday || isProjectDate ? '' : 'border-l border-gray-200'}`} />
-                                  
-                                  {/* Ligne bleue pour aujourd'hui */}
-                                  {isToday && (
-                                    <div className="absolute top-0 bottom-0 w-1 bg-blue-500 opacity-50" style={{ left: '-2px' }}>
-                                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-blue-500 rounded-full" />
-                                    </div>
-                                  )}
-                                  
-                                  {/* Ligne rouge pour la date du projet */}
-                                  {isProjectDate && (
-                                    <div className="absolute top-0 bottom-0 w-1 bg-red-500 opacity-70" style={{ left: '-2px' }}>
-                                      <div className="absolute -top-1 left-1/2 -translate-x-1/2 w-3 h-3 bg-red-500 rounded-full" />
-                                    </div>
-                                  )}
-                                </div>
-                              );
-                            })}
                           </div>
                         </div>
                       );
                     })}
+                    </div>
                   </div>
                 );
               })}
