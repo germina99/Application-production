@@ -265,7 +265,7 @@ metadata:
 
 test_plan:
   current_focus: 
-    - "Gantt Chart Soak Phase Hour-Based Representation"
+    - "Gantt Chart Project Editing"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
