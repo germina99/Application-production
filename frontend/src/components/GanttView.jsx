@@ -69,12 +69,48 @@ const GanttView = ({ refresh }) => {
       return;
     }
 
+    const newProjectDate = format(editForm.projectDate, 'yyyy-MM-dd');
+    const newProjectType = editForm.projectType;
+    
+    // Recalculer les dates de début de toutes les productions du projet
+    const updatedProductions = editingProject.productions.map(prod => {
+      const productSheets = getProductSheets();
+      const sheet = productSheets.find(s => s.id === prod.productSheetId);
+      
+      if (!sheet || !sheet.methods[prod.method]) {
+        return prod; // Si pas de données, on garde tel quel
+      }
+      
+      const methodData = sheet.methods[prod.method];
+      const daysNeeded = calculateDaysToStage(methodData, prod.method, prod.targetStage);
+      
+      const calculatedDate = new Date(newProjectDate);
+      
+      // Pour "test", la date du projet EST la date de début
+      if (newProjectType === 'test') {
+        return {
+          ...prod,
+          startDate: format(calculatedDate, 'yyyy-MM-dd')
+        };
+      }
+      
+      // Pour "photo" et "tournage", la date du projet est la date de fin
+      // On soustrait les jours nécessaires pour obtenir la date de début
+      calculatedDate.setDate(calculatedDate.getDate() - daysNeeded);
+      
+      return {
+        ...prod,
+        startDate: format(calculatedDate, 'yyyy-MM-dd')
+      };
+    });
+
     const updatedProject = {
       ...editingProject,
       projectName: editForm.projectName,
       projectDescription: editForm.projectDescription,
-      projectDate: format(editForm.projectDate, 'yyyy-MM-dd'),
-      projectType: editForm.projectType
+      projectDate: newProjectDate,
+      projectType: newProjectType,
+      productions: updatedProductions
     };
 
     updateProject(editingProject.id, updatedProject);
@@ -83,7 +119,7 @@ const GanttView = ({ refresh }) => {
     setEditingProject(null);
     toast({
       title: "Projet modifié",
-      description: `Le projet ${editForm.projectName} a été modifié avec succès.`
+      description: `Le projet ${editForm.projectName} a été modifié avec les dates recalculées.`
     });
   };
 
