@@ -17,7 +17,7 @@ const ProductSheetForm = ({ onSheetCreated, editMode = false, existingSheet = nu
   const [taskName, setTaskName] = useState('');
   const [taskWhen, setTaskWhen] = useState('Début');
   const [taskFrequency, setTaskFrequency] = useState('1x/jour');
-  const [taskDuration, setTaskDuration] = useState('10 min');
+  const [taskEnd, setTaskEnd] = useState('Fin');
 
   useEffect(() => {
     if (editMode && existingSheet) {
