@@ -401,23 +401,23 @@ const GanttView = ({ refresh }) => {
                       const progressPercent = getProgressPosition(production.startDate, production.endDate);
                       
                       return (
-                        <div key={production.id} className="flex items-center group hover:bg-gray-50 rounded-lg p-2 transition-colors ml-6">
-                          <div className="w-72 flex-shrink-0 pr-4">
-                            <div className="font-medium text-sm">{production.variety}</div>
+                        <div key={production.id} className="flex items-center group hover:bg-gray-50 rounded p-1 transition-colors ml-4">
+                          <div className="w-64 flex-shrink-0 pr-3">
+                            <div className="font-medium text-xs">{production.variety}</div>
                             <div className="text-xs text-gray-500">{production.method}</div>
-                            <div className="flex items-center gap-2 mt-1">
+                            <div className="flex items-center gap-2 mt-0.5">
                               {production.quantity && (
                                 <span className="text-xs text-gray-400">{production.quantity}</span>
                               )}
                               {production.targetStage && (
-                                <Badge variant="outline" className="text-xs">
+                                <Badge variant="outline" className="text-xs py-0 h-4">
                                   {production.targetStage}
                                 </Badge>
                               )}
                             </div>
                           </div>
 
-                          <div className="flex-1 relative h-12 overflow-x-auto">
+                          <div className="flex-1 relative h-10 overflow-x-auto">
                             <div
                               className="absolute top-1/2 -translate-y-1/2 h-8 rounded shadow-md hover:shadow-lg transition-all cursor-pointer flex overflow-hidden"
                               style={{ left: barPos.left, width: barPos.width }}
