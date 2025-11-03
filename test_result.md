@@ -208,6 +208,18 @@ frontend:
         agent: "testing"
         comment: "SOAK PHASE HOUR-BASED TESTING COMPLETE ✅ All test objectives successfully verified: 1) Soak phases proportionally sized based on hours not days (3.57%-4.76% of total width), 2) All soak phases start at 10:00 AM as confirmed in tooltips, 3) Tooltips display correct hour format ('Trempage: 8h (débute à 10:00)' for 8h soak, 'Trempage: 6h (débute à 10:00)' for 6h soak), 4) Soak bars appropriately smaller than before (~1/3 of day for 8h, ~1/4 for 6h). Expected productions verified: Brocoli (Micro-pousse sur terreau) 8h soak, Radis (Micro-pousse sur terreau) 8h soak, Radis (Germination en pot) 6h soak. Hour-based representation working perfectly with correct proportional sizing and 10:00 AM start time implementation."
 
+  - task: "Gantt Chart Project Editing"
+    implemented: true
+    working: "NA"
+    file: "src/components/GanttView.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+      - working: "NA"
+        agent: "main"
+        comment: "Project editing functionality implemented with edit dialog, form validation, and toast notifications. Features: edit button (blue pencil icon) on each project header, dialog with pre-filled values, editable fields (name, description, type, date), save/cancel functionality, and success toast messages. Ready for comprehensive testing."
+
   - task: "Daily Tasks View"
     implemented: true
     working: true
