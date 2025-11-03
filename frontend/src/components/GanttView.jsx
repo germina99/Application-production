@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from './ui/card';
 import { Badge } from './ui/badge';
 import { Button } from './ui/button';
 import { CalendarDays, Trash2, AlertCircle, Video, Image as ImageIcon, FlaskConical, Pencil } from 'lucide-react';
-import { getAllProductions, getProjects, deleteProject, updateProject } from '../mock';
+import { getAllProductions, getProjects, deleteProject, updateProject, getProductSheets, calculateDaysToStage } from '../mock';
 import { toast } from '../hooks/use-toast';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from './ui/dialog';
 import { Input } from './ui/input';
