@@ -1,0 +1,39 @@
+name: Build static frontend
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Use Node LTS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install & build (frontend)
+        working-directory: frontend
+        run: |
+          npm ci || npm install
+          npm run build
+
+      # On compresse le dossier build pour le récupérer facilement
+      - name: Zip build
+        run: |
+          cd frontend
+          zip -r build.zip build
+
+      - name: Upload artifact (build.zip)
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-zip
+          path: frontend/build.zip
+          if-no-files-found: error
