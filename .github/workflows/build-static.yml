@@ -15,8 +15,7 @@ jobs:
       - name: Use Node LTS
         uses: actions/setup-node@v4
         with:
-          node-version: 'lts/*'
-          cache: 'npm'   # <-- on garde le cache, mais SANS cache-dependency-path
+          node-version: 'lts/*'   # pas de cache ici
 
       - name: Install & build (frontend)
         working-directory: frontend
